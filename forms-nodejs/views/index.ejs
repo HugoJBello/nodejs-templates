@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body class="container">
+    <h1><%= title %></h1>
+    <div class="login">
+      <form method="post" action="/">
+          <div class="row">
+          <div class="cell">user: </div>
+          <div class="cell"><input type="text" name="user"></div>
+          </div>
+          <div class="row">
+            <div class="cell">password:</div>
+            <div class="cell"><input type="password" name="password"></div>
+          </div>
+          <input type="submit" value="Submit">
+      </form>
+    </div>
+  </body>
+</html>
