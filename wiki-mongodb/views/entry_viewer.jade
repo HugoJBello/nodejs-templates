@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  if (entry)
+    h1 #{entry.name}
+    .container #{entry.content}
+    .container #{entry.category.name}
+   if (!entry)
+    h1 Editing #{entry.name}
+    a(href="/entry_editor") edite
+  h2 user: #{user.username}
