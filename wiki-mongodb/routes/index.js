@@ -1,9 +1,12 @@
 var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
-var WikiEntry   =require('../models/wiki_entry');
+var PageEntry   =require('../models/page_entry');
 var router = express.Router();
 
+// var mongoose = require('mongoose');
+// var schema = new mongoose.Schema({ name: 'string', author: 'string', content:'string' },{ collection : 'PageEntries' });
+// var PageEntry = mongoose.model('PageEntry', schema);
 
 router.get('/', function (req, res) {
     res.render('index', { user : req.user });
@@ -20,12 +23,10 @@ router.get('/app', function (req, res) {
 router.get('/entry_viewer/:entry_name', function(req, res) {
    console.log('------------------------------------------------------');
    console.log(req.params.entry_name);
-    WikiEntry.findOne({'name':req.params.entry_name}, function(error, entry){
-     if (error) next();
-     return res.render('entry_viewer', {WikiEntry :  WikiEntry });
-   });
-  next();
-
+    PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
+      if (err) throw err;
+      return res.render('entry_viewer', {entry :  entry });
+  });
 });
 
 router.get('/register', function(req, res) {
