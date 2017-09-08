@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var Account = require('../models/account');
 var PageEntry   =require('../models/page_entry');
+var md = require("marked");
+
 var router = express.Router();
 
 // var mongoose = require('mongoose');
@@ -21,11 +23,10 @@ router.get('/app', function (req, res) {
 });
 
 router.get('/entry_viewer/:entry_name', function(req, res) {
-   console.log('------------------------------------------------------');
-   console.log(req.params.entry_name);
     PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
       if (err) throw err;
-      return res.render('entry_viewer', {entry :  entry });
+      console.log(md("bla \n bla"))
+      return res.render('entry_viewer', {entry :  entry, user : req.user, md: md});
   });
 });
 
