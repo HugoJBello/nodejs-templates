@@ -25,7 +25,7 @@ router.get('/app', function (req, res) {
 router.get('/entry_viewer/:entry_name', function(req, res) {
     PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
       if (err) throw err;
-      console.log(md("bla \n bla"))
+      entry.content = md(entry.content);
       return res.render('entry_viewer', {entry :  entry, user : req.user, md: md});
   });
 });
