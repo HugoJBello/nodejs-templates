@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
+  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+  form(id="formEntry")
+    if (entry)
+      textarea(id = "text" cols="80" rows="80")
+        |#{entry.content}
+    if(!entry)
+      textarea(id = "MyID" path="inputText" cols="45" rows="20")
+  
+  script
+    |var simplemde = new SimpleMDE({ element: document.getElementById("text") });
+  
+  

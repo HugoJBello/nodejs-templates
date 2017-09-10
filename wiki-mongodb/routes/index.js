@@ -6,10 +6,6 @@ var md = require("marked");
 
 var router = express.Router();
 
-// var mongoose = require('mongoose');
-// var schema = new mongoose.Schema({ name: 'string', author: 'string', content:'string' },{ collection : 'PageEntries' });
-// var PageEntry = mongoose.model('PageEntry', schema);
-
 router.get('/', function (req, res) {
     res.render('index', { user : req.user });
 });
@@ -26,7 +22,14 @@ router.get('/entry_viewer/:entry_name', function(req, res) {
     PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
       if (err) throw err;
       entry.content = md(entry.content);
-      return res.render('entry_viewer', {entry :  entry, user : req.user, md: md});
+      return res.render('entry_viewer', {entry :  entry, user : req.user});
+  });
+});
+
+router.get('/entry_editor/:entry_name', function(req, res) {
+  PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
+    if (err) throw err;
+    return res.render('entry_editor', {entry :  entry, user : req.user});
   });
 });
 
