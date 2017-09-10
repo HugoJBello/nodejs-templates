@@ -3,14 +3,19 @@ extends layout
 block content
   link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
-  form(id="formEntry")
+  
+  form(role='form', id='formEntry', action='/entry_editor',method='post')
     if (entry)
-      textarea(id = "text" cols="80" rows="80")
+      textarea(id = 'text' cols='80' rows='80',name='content')
         |#{entry.content}
     if(!entry)
-      textarea(id = "MyID" path="inputText" cols="45" rows="20")
-  
+      textarea(id = 'text' path='inputText' cols='45' rows='20',name='content')
+    
+    input(type='hidden' name='_id' value='#{entry._id}')
+    input(type='hidden' name='entry_name' value='#{entry.name}')
+    input(type='hidden' name='created_at' value='#{entry.created_at}')
+    button.btn.btn-default(type='submit') Submit
   script
-    |var simplemde = new SimpleMDE({ element: document.getElementById("text") });
+    |var simplemde = new SimpleMDE({ element: document.getElementById('text') });
   
   

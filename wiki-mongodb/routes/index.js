@@ -3,7 +3,7 @@ var passport = require('passport');
 var Account = require('../models/account');
 var PageEntry   =require('../models/page_entry');
 var md = require("marked");
-
+var path = require("path");
 var router = express.Router();
 
 router.get('/', function (req, res) {
@@ -33,6 +33,18 @@ router.get('/entry_editor/:entry_name', function(req, res) {
   });
 });
 
+router.post('/entry_editor', function(req, res) {
+  const entry = new PageEntry({'_id': req.body._id,
+                        'name':req.body.entry_name,
+                        'content':req.body.content,
+                        'user':req.user});
+  console.log(entry);
+  PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
+    if (err) throw err;
+    return res.redirect('entry_viewer/'+ req.body.entry_name);
+  });
+});
+
 router.get('/register', function(req, res) {
     res.render('register', { });
 });
@@ -42,7 +54,6 @@ router.post('/register', function(req, res) {
         if (err) {
             return res.render('register', { account : account });
         }
-
         passport.authenticate('local')(req, res, function () {
             res.redirect('/');
         });
