@@ -5,11 +5,11 @@ block content
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
   script(type='text/javascript',src='/js/filename_utils.js')
   .container
-    p.lead 
-      |#{entry.name}
-      
     form(role='form', id='formEntry', action='/entry_editor',method='post')
       if (entry)
+        p.lead 
+          |Editing #{entry.title}
+        
         textarea(id = 'text' cols='80' rows='80',name='content')
           |#{entry.content}
         
@@ -19,10 +19,10 @@ block content
       
       if(!entry)
         input(id='is_new' type='hidden' name='new' value='true')
-        p.lead Title:
-          input(id='title' type='text'  name='title' value='Title name')
+        p.lead(value='Creating new entry with title: ')
+          input(id='title' type='text'  name='title' value='Title')
         emph Entry name: 
-        div(id='div_entry_name')
+        div(id='div_entry_name' value = 'title')
         input(id='entry_name_hidden' type='hidden' name='entry_name')
         textarea(id = 'text' cols='45' rows='20' name='content')
         script
