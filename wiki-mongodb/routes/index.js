@@ -34,15 +34,22 @@ router.get('/entry_editor/:entry_name', function(req, res) {
 });
 
 router.post('/entry_editor', function(req, res) {
-  const entry = new PageEntry({'_id': req.body._id,
+  var entry = new PageEntry({'_id': req.body._id,
                         'name':req.body.entry_name,
                         'content':req.body.content,
                         'user':req.user});
   console.log(entry);
-  PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
-    if (err) throw err;
-    return res.redirect('entry_viewer/'+ req.body.entry_name);
-  });
+  if (req.body.new =='true'){
+    PageEntry.create(entry, function(err,raw){
+      if (err) throw err;
+      return res.redirect('entry_viewer/'+ req.body.entry_name);
+    });
+  } else  {
+    PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
+      if (err) throw err;
+      return res.redirect('entry_viewer/'+ req.body.entry_name);
+    });
+  }
 });
 
 router.get('/register', function(req, res) {

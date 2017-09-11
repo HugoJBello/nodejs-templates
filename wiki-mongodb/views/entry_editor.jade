@@ -3,19 +3,42 @@ extends layout
 block content
   link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
-  
-  form(role='form', id='formEntry', action='/entry_editor',method='post')
-    if (entry)
-      textarea(id = 'text' cols='80' rows='80',name='content')
-        |#{entry.content}
-    if(!entry)
-      textarea(id = 'text' path='inputText' cols='45' rows='20',name='content')
-    
-    input(type='hidden' name='_id' value='#{entry._id}')
-    input(type='hidden' name='entry_name' value='#{entry.name}')
-    input(type='hidden' name='created_at' value='#{entry.created_at}')
-    button.btn.btn-default(type='submit') Submit
+  script(type='text/javascript',src='/js/filename_utils.js')
+  .container
+    p.lead 
+      |#{entry.name}
+      
+    form(role='form', id='formEntry', action='/entry_editor',method='post')
+      if (entry)
+        textarea(id = 'text' cols='80' rows='80',name='content')
+          |#{entry.content}
+        
+        input(type='hidden' name='_id' value='#{entry._id}')
+        input(type='hidden' name='entry_name' value='#{entry.name}')
+        input(type='hidden' name='created_at' value='#{entry.created_at}')
+      
+      if(!entry)
+        input(id='is_new' type='hidden' name='new' value='true')
+        p.lead Title:
+          input(id='title' type='text'  name='title' value='Title name')
+        emph Entry name: 
+        div(id='div_entry_name')
+        input(id='entry_name_hidden' type='hidden' name='entry_name')
+        textarea(id = 'text' cols='45' rows='20' name='content')
+        script
+          |var divEntryName = $( "#div_entry_name" );
+          |var inputEntryNameHidden = $( "#entry_name_hidden" );
+          |var title = $("#title");
+          |$(document).ready(function(){
+          |  title.keyup(function(){
+          |   divEntryName.html(titleToFilename(title.val()));
+          |   inputEntryNameHidden.val(titleToFilename(title.val()));
+          |   console.log(inputEntryNameHidden.val());
+          | });
+          |});
+      
+      button.btn.btn-default(type='submit') Submit
   script
     |var simplemde = new SimpleMDE({ element: document.getElementById('text') });
-  
+    
   
