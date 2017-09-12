@@ -9,7 +9,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var routes = require('./routes/index');
+var routesIndex = require('./routes/index');
+var routesEntryViewer = require('./routes/entry_viewer');
+var routesEntryEditor = require('./routes/entry_editor');
 var users = require('./routes/users');
 
 var app = express();
@@ -34,7 +36,9 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', routes);
+app.use('/', routesIndex);
+app.use('/', routesEntryViewer);
+app.use('/', routesEntryEditor);
 
 // passport config
 var Account = require('./models/account');
@@ -43,7 +47,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://hjbello:3141592625@ds121494.mlab.com:21494/hjbello');
+mongoose.connect('mongodb://localhost:27017/hjbello');
+//mongoose.connect('mongodb://hjbello:3141592625@ds121494.mlab.com:21494/hjbello');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

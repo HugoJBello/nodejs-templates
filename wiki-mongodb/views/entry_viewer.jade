@@ -2,9 +2,25 @@ extends layout
 
 block content
   if (entry)
-    h1 #{entry.name}
+    h1 !{entry.name}
+    
+    ul.nav.nav-tabs
+      li.active
+        a(href='/entry_viewer/#{entry.name}') View
+          |  
+          div.glyphicon.glyphicon-eye-open
+      li
+        a(href='/entry_editor/#{entry.name}') Edit
+          |  
+          div.glyphicon.glyphicon-pencil
+      li
+        a(href='#') Add image
+          |  
+          div.glyphicon.glyphicon-picture
+      li
+        a(href='#') History
     .container 
        !{entry.content}
    if (!entry)
     h1 Editing #{entry.name}
-    a(href="/entry_editor") edite #{entry.name}
+    a(href="/entry_editor") edit #{entry.name}
