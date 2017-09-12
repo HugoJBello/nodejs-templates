@@ -5,25 +5,25 @@ block content
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
   script(type='text/javascript',src='/js/filename_utils.js')
 
+  h1 #{entry.title}
+  ul.nav.nav-tabs
+    li
+      a(href='/entry_viewer/#{entry.name}') View
+        |  
+        div.glyphicon.glyphicon-eye-open
+    li.active
+      a(href='/entry_editor/#{entry.name}') Edit
+        |  
+        div.glyphicon.glyphicon-pencil
+    li
+      a(href='#') Add image
+        |  
+        div.glyphicon.glyphicon-picture
+    li
+      a(href='#') History
+
   form(role='form', id='formEntry', action='/entry_editor',method='post')
     if (entry)
-      h1 #{entry.title}
-      ul.nav.nav-tabs
-        li
-          a(href='/entry_viewer/#{entry.name}') View
-            |  
-            div.glyphicon.glyphicon-eye-open
-        li.active
-          a(href='/entry_editor/#{entry.name}') Edit
-            |  
-            div.glyphicon.glyphicon-pencil
-        li
-          a(href='#') Add image
-            |  
-            div.glyphicon.glyphicon-picture
-        li
-          a(href='#') History
-      
       textarea(id = 'text' cols='80' rows='80',name='content')
         |#{entry.content}
       

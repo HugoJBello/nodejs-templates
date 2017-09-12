@@ -13,11 +13,14 @@ router.get('/entry_viewer/:entry_name', function(req, res) {
       if (!entry){
         return res.redirect('/entry_editor/'+ req.params.entry_name);
       } else {
-        entry.content = md(entry.content);
-        return res.render('entry_viewer', {entry :  entry, user : req.user});
+        contentHtml = md(entry.content);
+        return res.render('entry_viewer', {entry :  entry,contentHtml : contentHtml, user : req.user});
       }
     });
 });
 
+router.get('/searching', function(req, res){
+ res.send("WHEEE");
+});
 
 module.exports = router;
