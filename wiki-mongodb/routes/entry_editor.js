@@ -22,6 +22,7 @@ router.get('/entry_editor', function(req, res) {
 router.post('/entry_editor', function(req, res) {
   var entry = new PageEntry({'_id': req.body._id,
                         'name':req.body.entry_name,
+                        'title':req.body.title,
                         'content':req.body.content,
                         'modified_at': new Date(),
                         'user':req.user});
