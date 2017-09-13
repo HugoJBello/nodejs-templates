@@ -1,26 +1,13 @@
-extends layout
+extends layout_editor
 
-block content
+block content_editor
   link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
   script(type='text/javascript',src='/js/filename_utils.js')
 
-  h1 #{entry.title}
-  ul.nav.nav-tabs
-    li
-      a(href='/entry_viewer/#{entry.name}') View
-        |  
-        div.glyphicon.glyphicon-eye-open
-    li.active
-      a(href='/entry_editor/#{entry.name}') Edit
-        |  
-        div.glyphicon.glyphicon-pencil
-    li
-      a(href='#') Add image
-        |  
-        div.glyphicon.glyphicon-picture
-    li
-      a(href='#') History
+  script.
+    $('#liView').attr('class','');
+    $('#liEdit').attr('class','active');
 
   form(role='form', id='formEntry', action='/entry_editor',method='post')
     if (entry)

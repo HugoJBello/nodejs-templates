@@ -2,6 +2,7 @@ var express = require('express');
 var PageEntry   =require('../models/page_entry');
 var md = require("marked");
 var router = express.Router();
+var md = require("marked");
 
 router.get('/entry_editor/:entry_name', function(req, res) {
   PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
@@ -31,12 +32,14 @@ router.post('/entry_editor', function(req, res) {
     entry.created_at = new Date();
     PageEntry.create(entry, function(err,raw){
       if (err) throw err;
-      return res.redirect('/entry_viewer/'+ req.body.entry_name);
+      contentHtml = md(entry.content);
+      return res.render('entry_viewer', {entry :  entry,contentHtml : contentHtml, user : req.user});
     });
   } else  {
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
-      return res.redirect('/entry_viewer/'+ req.body.entry_name);
+      contentHtml = md(entry.content);
+      return res.render('entry_viewer', {entry :  entry,contentHtml : contentHtml, user : req.user});
     });
   }
 });

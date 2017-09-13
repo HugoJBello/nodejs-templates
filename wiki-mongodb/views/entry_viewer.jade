@@ -1,61 +1,16 @@
-extends layout
+extends layout_editor
 
-block content
-  link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
-  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+block content_editor
+  script.
+    $('#liView').attr('class','active');
+    $('#liEdit').attr('class','');
 
-  if (entry)
-    h1 !{entry.title}
-    
-    ul.nav.nav-tabs
-      li(id='liView').active
-        a(href='/entry_viewer/#{entry.name}') View
-          |  
-          div.glyphicon.glyphicon-eye-open
-      li(id='liEdit')
-        a(id='edit') Edit
-          |  
-          div.glyphicon.glyphicon-pencil
-      li
-        a(href='#') Add image
-          |  
-          div.glyphicon.glyphicon-picture
-      li
-        a(href='#') History
-    div 
-       div(id='content') 
-        !{contentHtml}
-       form(role='form', id='formEntry', action='/entry_editor',method='post')
-         textarea(id = 'text' cols='80' rows='80',name='content')
-           |#{entry.content}
-         input(type='hidden' name='_id' value='#{entry._id}')
-         input(type='hidden' name='entry_name' value='#{entry.name}')
-         input(type='hidden' name='created_at' value='#{entry.created_at}')
-         button.btn.btn-default(type='submit' id='button') Submit
-         script 
-          |$('#text').hide();
-          |$('#button').hide();
-
-    div
-      a(id="test") testing
-   
-   if (!entry)
+  if (entry) 
+    div(id='content') 
+      !{contentHtml}
+     
+  if (!entry)
     h1 Editing #{entry.name}
     a(href="/entry_editor") edit #{entry.name}
     
-  script
-    |$(function(){
-    |  $('#edit').click(function(e){
-    |    console.log("-...");
-    |     $('#content').html('');
-    |     $('#text').show();
-    |     $('#button').show();
-    |     $('#liView').attr('class', '');
-    |     $('#liEdit').attr('class', 'active');
-    |     var simplemde = new SimpleMDE({ element: document.getElementById('text') });
-    |     var parameters = { search: $(this).val() };
-    |       $.get( '/searching',parameters, function(data) {
-    |       $('#test').html(data);
-    |     });
-    |  });
-    |});
+  

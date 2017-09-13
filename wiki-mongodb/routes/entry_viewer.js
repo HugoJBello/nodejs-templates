@@ -19,6 +19,16 @@ router.get('/entry_viewer/:entry_name', function(req, res) {
     });
 });
 
+router.get('/refresh/:entry_name', function(req, res) {
+    PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
+      if (err) throw err;
+      if (entry) {
+        contentHtml = md(entry.content);
+        return res.send('entry_viewer', {content :  entry.content, contentHtml : contentHtml, user : req.user});
+      }
+    });
+});
+
 router.get('/searching', function(req, res){
  res.send("WHEEE");
 });

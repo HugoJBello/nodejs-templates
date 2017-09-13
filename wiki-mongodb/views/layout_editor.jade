@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  
+  link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
+  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+
+  if (entry)
+    h1 !{entry.title}
+    
+    ul.nav.nav-tabs
+      li(id='liView')
+        a(id='view' href='/entry_viewer/#{entry.name}') View
+          |  
+          div.glyphicon.glyphicon-eye-open
+      li(id='liEdit')
+        a(id='edit' href='/entry_editor/#{entry.name}') Edit
+          |  
+          div.glyphicon.glyphicon-pencil
+      li
+        a(href='#') Add image
+          |  
+          div.glyphicon.glyphicon-picture
+      li
+        a(href='#') History
+      //- li(type='hidden' id='liSave')
+      //-   a(type='hidden') Save
+        
+    block content_editor
