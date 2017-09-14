@@ -8,7 +8,8 @@ var schema = new Schema(
   created_at: Date,
   updated_at: Date,
   author: String,
-  content:String },
+  content:String,
+  cathegories: [String] },
   { collection : 'PageEntries' });
 
 var PageEntry = mongoose.model('PageEntry', schema);

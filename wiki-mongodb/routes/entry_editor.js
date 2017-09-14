@@ -8,7 +8,12 @@ router.get('/entry_editor/:entry_name', function(req, res) {
   PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
     if (err) throw err;
     if(entry){
-      return res.render('entry_editor', {entry :  entry, user : req.user});
+      var cathegoriesSemicolom='';
+      for (var i = 0; i < entry.cathegories.length; i++){
+        cathegoriesSemicolom= cathegoriesSemicolom+entry.cathegories[i]+';';
+      }
+
+      return res.render('entry_editor', {entry :  entry, user : req.user,cathegoriesSemicolom : cathegoriesSemicolom});
     } else {
       return res.render('entry_editor', {user : req.user});
     }
@@ -21,11 +26,14 @@ router.get('/entry_editor', function(req, res) {
 
 
 router.post('/entry_editor', function(req, res) {
+  var cathegories = req.body.cathegoriesSemicolom.split(';');
+  console.log(cathegories);
   var entry = new PageEntry({'_id': req.body._id,
                         'name':req.body.entry_name,
                         'title':req.body.title,
                         'content':req.body.content,
                         'modified_at': new Date(),
+                        'cathegories': cathegories,
                         'user':req.user});
   console.log(entry);
   if (req.body.new =='true'){

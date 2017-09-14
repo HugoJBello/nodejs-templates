@@ -17,7 +17,20 @@ block content_editor
       input(type='hidden' name='_id' value='#{entry._id}')
       input(type='hidden' name='entry_name' value='#{entry.name}')
       input(type='hidden' name='created_at' value='#{entry.created_at}')
-    
+      if (entry.cathegories[0])
+        div
+          |Cathegories: 
+        
+        p
+          input(name='cathegoriesSemicolom', id='cathegories', value='#{cathegoriesSemicolom}')
+      else
+        div
+          |Cathegories: 
+        
+        p
+          input(name='cathegoriesSemicolom', id='cathegories', value='categories separated by ;')
+      
+      
     if(!entry)
       input(id='is_new' type='hidden' name='new' value='true')
       p.lead(value='Creating new entry with title: ')
@@ -26,6 +39,10 @@ block content_editor
       div(id='div_entry_name' value = 'title')
       input(id='entry_name_hidden' type='hidden' name='entry_name')
       textarea(id = 'text' cols='45' rows='20' name='content')
+      div
+        |Cathegories: 
+        p
+          input(name='cathegoriesSemicolom', id='cathegories', value='categories separated by ;')
       script
         |var divEntryName = $( "#div_entry_name" );
         |var inputEntryNameHidden = $( "#entry_name_hidden" );
