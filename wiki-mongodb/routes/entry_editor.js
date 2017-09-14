@@ -3,13 +3,14 @@ var PageEntry   =require('../models/page_entry');
 var md = require("marked");
 var router = express.Router();
 var Cathegory = require('../models/cathegory');
+
 router.get('/entry_editor/:entry_name', function(req, res) {
   PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
     if (err) throw err;
     if(entry){
       var cathegoriesSemicolom='';
       for (var i = 0; i < entry.cathegories.length; i++){
-        if (entry.cathegories[i]!=='') cathegoriesSemicolom= cathegoriesSemicolom+entry.cathegories[i].trim()+';';
+        if (entry.cathegories[i]!='') cathegoriesSemicolom= cathegoriesSemicolom+entry.cathegories[i].trim()+';';
       }
 
       return res.render('entry_editor', {entry :  entry, user : req.user,cathegoriesSemicolom : cathegoriesSemicolom});
@@ -32,12 +33,12 @@ router.post('/entry_editor', function(req, res) {
   }
 
   var entry = new PageEntry({'_id': req.body._id,
-                        'name':req.body.entry_name,
-                        'title':req.body.title,
-                        'content':req.body.content,
-                        'modified_at': new Date(),
-                        'cathegories': cathegories,
-                        'user':req.user});
+                            'name':req.body.entry_name,
+                            'title':req.body.title,
+                            'content':req.body.content,
+                            'modified_at': new Date(),
+                            'cathegories': cathegories,
+                            'user':req.user});
   if (req.body.new =='true'){
     entry.created_at = new Date();
     PageEntry.create(entry, function(err,raw){
@@ -67,6 +68,5 @@ function updateCathegory (cathegory_name){
     }
   });
 }
-
 
 module.exports = router;

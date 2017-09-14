@@ -1,0 +1,33 @@
+extends layout_editor
+
+block content_editor
+  link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
+  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+  script(type='text/javascript',src='/js/filename_utils.js')
+
+  script.
+    $('#liView').attr('class','');
+    $('#liEdit').attr('class','active');
+    
+  form(role='form', id='formCathegory', action='/cathegory_editor',method='post')
+    if (cathegory)
+      h2 #{cathegory.name}
+    
+      textarea(id = 'text' cols='80' rows='80',name='content')
+        |#{cathegory.description}
+      
+      input(type='hidden' name='_id' value='#{cathegory._id}')  
+    else
+      div
+        |Cathegory name: 
+        p
+          input(name='cathegoriesSemicolom', id='cathegories', value='Cathegory name')
+      p Description
+      
+      textarea(id = 'text' cols='80' rows='80',name='content')
+        |#{cathegory.description}
+        
+    button.btn.btn-default(type='submit') Submit
+    script
+      |var simplemde = new SimpleMDE({ element: document.getElementById('text') });
+      

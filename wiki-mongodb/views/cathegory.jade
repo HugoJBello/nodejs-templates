@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  script(type='text/javascript',src='/js/filename_utils.js')
+  
+  if (cathegory) 
+    h2 !{cathegory.name}
+    div(id='content') 
+      !{descriptionHtml}
+        
+     
+  else
+    h1 Editing #{cathegory.name}
+    a(href="/cathegory_editor") edit #{cathegory.name}
+    
+  
