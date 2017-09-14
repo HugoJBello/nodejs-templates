@@ -29,8 +29,5 @@ router.get('/refresh/:entry_name', function(req, res) {
     });
 });
 
-router.get('/searching', function(req, res){
- res.send("WHEEE");
-});
 
 module.exports = router;
