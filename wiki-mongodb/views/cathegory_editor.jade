@@ -12,19 +12,22 @@ block content_editor
   form(role='form', id='formCathegory', action='/cathegory_editor',method='post')
     if (cathegory)
       h2 #{cathegory.name}
-    
-      textarea(id = 'text' cols='80' rows='80',name='content')
+      p 
+        |Description:
+      textarea(id = 'text' cols='80' rows='80',name='description')
         |#{cathegory.description}
       
       input(type='hidden' name='_id' value='#{cathegory._id}')  
     else
+      input(type='hidden' name='new' value='true')
       div
         |Cathegory name: 
         p
           input(name='cathegoriesSemicolom', id='cathegories', value='Cathegory name')
-      p Description
+      p 
+        |Description
       
-      textarea(id = 'text' cols='80' rows='80',name='content')
+      textarea(id = 'text' cols='80' rows='80',name='description')
         |#{cathegory.description}
         
     button.btn.btn-default(type='submit') Submit
