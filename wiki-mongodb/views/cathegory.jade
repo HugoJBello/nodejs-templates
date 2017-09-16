@@ -7,8 +7,34 @@ block content
     h2 !{cathegory.name}
     div(id='content') 
       !{descriptionHtml}
-        
-     
+    each entry in entries
+      p
+        a(id=entry.entry_name href='/entry_viewer/#{entry.name}')
+          | page #{entry.title}
+        input(id='page' type='hidden' value='#{page}' )
+        input(id='pages' type='hidden' value '#{pages}')
+    p
+      |showing page !{page} of !{pages}. 
+      
+    nav(aria-label='Page navigation example')
+     ul.pagination(id='list_pages')
+       if page!=0
+         li.page-item
+           a.page-link(id='previous_page' href='') Previous 
+       - for (var i = 0; i < pages; ++i) 
+         li.page-item
+          a.page-link(href='/cathegory/cat=#{cathegory._id}&page=#{i}') #{i}
+       if page<pages
+         li.page-item
+           a.page-link(id='next_page' href='') Next
+     script.
+       var page =parseInt($('#page').val());
+       var pages=parseInt(#{pages});
+       console.log(pages);
+       var next_page = page +1;
+       var previous_page=page-1;
+       $('#next_page').attr('href',"/cathegory/cat=#{cathegory._id}&page="+next_page);
+       $('#previous_page').attr('href',"/cathegory/cat=#{cathegory._id}&page="+previous_page);
   else
     h1 Editing #{cathegory.name}
     a(href="/cathegory_editor") edit #{cathegory.name}
