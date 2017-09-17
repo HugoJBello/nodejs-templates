@@ -9,7 +9,8 @@ var schema = new Schema(
   updated_at: Date,
   author: String,
   content:String,
-  cathegories: [String] },
+  cathegories: [String],
+  cathegories_id:[String]},
   { collection : 'PageEntries' });
 
 var PageEntry = mongoose.model('PageEntry', schema);

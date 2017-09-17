@@ -28,7 +28,6 @@ router.get('/entry_editor', function(req, res) {
 router.post('/entry_editor', function(req, res) {
   var cathegories = req.body.cathegoriesSemicolom.split(';');
   for (var i=0; i<cathegories.length;i++){
-    console.log(cathegories[i])
     if (cathegories[i]!='') updateCathegory(cathegories[i]);
   }
 
@@ -37,23 +36,23 @@ router.post('/entry_editor', function(req, res) {
                             'title':req.body.title,
                             'content':req.body.content,
                             'modified_at': new Date(),
-                            'cathegories': cathegories,
+                            'cathegories':cathegories,
                             'user':req.user});
+  console.log(entry);
   if (req.body.new =='true'){
     entry.created_at = new Date();
     PageEntry.create(entry, function(err,raw){
       if (err) throw err;
-      contentHtml = md(entry.content);
-      return res.render('entry_viewer', {entry :  entry,contentHtml : contentHtml, user : req.user});
+      return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
   } else  {
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
-      contentHtml = md(entry.content);
-      return res.render('entry_viewer', {entry :  entry,contentHtml : contentHtml, user : req.user});
+      return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
   }
 });
+
 
 function updateCathegory (cathegory_name){
   Cathegory.findOne({'name':cathegory_name}, function(err, cathegory){
@@ -62,11 +61,16 @@ function updateCathegory (cathegory_name){
       var cathegory_new = new Cathegory({'name':cathegory_name,
                                           'created_at': new Date()});
       Cathegory.create(cathegory_new, function(err,raw){
-        console.log(cathegory_new);
         if (err) throw err;
+        console.log(cathegory_new._id);
+        console.log(cathegory_new);
         });
+    } else {
+      console.log(cathegory._id);
+      console.log(cathegory);
     }
   });
 }
+
 
 module.exports = router;

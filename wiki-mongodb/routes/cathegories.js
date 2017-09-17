@@ -55,6 +55,18 @@ router.post('/cathegory_editor', function(req, res) {
   }
 });
 
+router.post('/obtain_cathegory_id', function(req, res) {
+  console.log(req.body);
+  console.log(req.body.cathegory_name);
+  Cathegory.findOne({'name':req.body.cathegory_name}, function(err, cathegory){
+    if (err) throw err;
+    console.log(cathegory._id)
+    res.type('json');
+    res.send({cathegory_id:cathegory._id});
+  });
+});
+
+
 function findEntriesWithCathegory (cathegory_name,page, callback){
   var perPage = 2;
   console.log(cathegory_name);

@@ -28,7 +28,7 @@ block content
          li.page-item
            a.page-link(id='next_page' href='') Next
      script.
-       var page =parseInt($('#page').val());
+       var page =parseInt(#{page});
        var pages=parseInt(#{pages});
        console.log(pages);
        var next_page = page +1;
