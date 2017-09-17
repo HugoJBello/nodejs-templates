@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  script(type='text/javascript',src='/js/filename_utils.js')
+  
+  if (entries) 
+    h2 Last entries
+    each entry in entries
+      p
+        a(id=entry.entry_name href='/entry_viewer/#{entry.name}')
+          | #{entry.title}
+        input(id='page' type='hidden' value='#{page}' )
+        input(id='pages' type='hidden' value '#{pages}')
+    p
+      |showing page !{page} of !{pages}. 
+      
+    nav(aria-label='Page navigation example')
+     ul.pagination(id='list_pages')
+       if page!=0
+         li.page-item
+           a.page-link(id='previous_page' href='') Previous 
+       - for (var i = 0; i < pages; ++i) 
+         li.page-item
+          a.page-link(href='/entry_list/page=#{i}') #{i}
+       if page<pages
+         li.page-item
+           a.page-link(id='next_page' href='') Next
+     script.
+       var page =parseInt(#{page});
+       var pages=parseInt(#{pages});
+       console.log(pages);
+       var next_page = page +1;
+       var previous_page=page-1;
+       $('#next_page').attr('href',"/entry_list/page="+next_page);
+       $('#previous_page').attr('href',"/entry_list/page="+previous_page);
+  else
+    p not entries found.
+  

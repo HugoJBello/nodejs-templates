@@ -35,7 +35,7 @@ router.post('/entry_editor', function(req, res) {
                             'name':req.body.entry_name,
                             'title':req.body.title,
                             'content':req.body.content,
-                            'modified_at': new Date(),
+                            'updated_at': new Date(),
                             'cathegories':cathegories,
                             'user':req.user});
   console.log(entry);
