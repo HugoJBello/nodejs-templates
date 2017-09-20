@@ -17,13 +17,31 @@ block content
         a(id='edit' href='/entry_editor/#{entry.name}') Edit
           |  
           div.glyphicon.glyphicon-pencil
-      li
-        a(href='#') Add image
+      li(id='liUpload')
+        a(href='/upload/#{entry.name}') Add image
           |  
           div.glyphicon.glyphicon-picture
       li
         a(href='#') History
       //- li(type='hidden' id='liSave')
       //-   a(type='hidden') Save
-        
+  else
+    if (entry_name)
+      ul.nav.nav-tabs
+        li(id='liView')
+          a(id='view' href='/entry_viewer/#{entry_name}') View
+            |  
+            div.glyphicon.glyphicon-eye-open
+        li(id='liEdit')
+          a(id='edit' href='/entry_editor/#{entry_name}') Edit
+            |  
+            div.glyphicon.glyphicon-pencil
+        li(id='liUpload')
+          a(href='/upload/#{entry_name}') Add image
+            |  
+            div.glyphicon.glyphicon-picture
+        li
+          a(href='#') History
+      
+          
   block content_editor

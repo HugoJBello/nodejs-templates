@@ -6,9 +6,12 @@ block content_editor
   script(type='text/javascript',src='/js/filename_utils.js')
 
   script.
-    $('#liView').attr('class','');
-    $('#liEdit').attr('class','active');
-
+    $(function() {
+      $('#liView').attr('class','');
+      $('#liEdit').attr('class','active');
+      $('#liUpload').attr('class','');
+    });  
+    
   form(role='form', id='formEntry', action='/entry_editor',method='post')
     if (entry)
       textarea(id = 'text' cols='80' rows='80',name='content')

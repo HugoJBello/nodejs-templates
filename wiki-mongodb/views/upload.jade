@@ -1,0 +1,20 @@
+extends layout_editor
+
+block content_editor
+  script(type='text/javascript',src='/js/filename_utils.js')
+  .container  
+    form#frmUploader(enctype='multipart/form-data', action='/upload/#{entry_name}', method='post')
+      .form-group
+        input(id='file' type='file', name='imgUploader', multiple='')
+      .form-group
+        input#btnSubmit(type='submit', name='submit', value='Upload')
+        if(result)
+          p#result
+            |#{result}
+      
+  script.
+    $(function() {
+      $('#liView').attr('class','');
+      $('#liEdit').attr('class','');
+      $('#liUpload').attr('class','active');
+    });

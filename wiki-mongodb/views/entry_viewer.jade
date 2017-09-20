@@ -3,9 +3,11 @@ extends layout_editor
 block content_editor
   script(type='text/javascript',src='/js/filename_utils.js')
   script.
-    $('#liView').attr('class','active');
-    $('#liEdit').attr('class','');
-
+    $(function() {
+      $('#liView').attr('class','active');
+      $('#liEdit').attr('class','');
+      $('#liUpload').attr('class','');
+    });  
   if (entry) 
     div(id='content') 
       !{contentHtml}
@@ -35,5 +37,3 @@ block content_editor
   if (!entry)
     h1 Editing #{entry.name}
     a(href="/entry_editor") edit #{entry.name}
-    
-  
