@@ -1,9 +1,9 @@
 extends layout_editor
 
 block content_editor
-  script(type='text/javascript',src='/js/filename_utils.js')
-  .container  
-    form#frmUploader(enctype='multipart/form-data', action='/upload/#{entry_name}', method='post')
+  br
+  div  
+    form#frmUploader(enctype='multipart/form-data', action='/upload/#{entry.name}', method='post')
       .form-group
         input(id='file' type='file', name='imgUploader', multiple='')
       .form-group

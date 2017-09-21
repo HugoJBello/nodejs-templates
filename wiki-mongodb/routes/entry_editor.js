@@ -12,8 +12,8 @@ router.get('/entry_editor/:entry_name', function(req, res) {
       for (var i = 0; i < entry.cathegories.length; i++){
         if (entry.cathegories[i]!='') cathegoriesSemicolom= cathegoriesSemicolom+entry.cathegories[i].trim()+';';
       }
-
-      return res.render('entry_editor', {entry :  entry, user : req.user,cathegoriesSemicolom : cathegoriesSemicolom});
+      var imagesUrl= req.protocol + '://' + req.get('host') + '/images/your-image-name-here';
+      return res.render('entry_editor', {entry :  entry, user : req.user,cathegoriesSemicolom : cathegoriesSemicolom, imagesUrl:imagesUrl});
     } else {
       return res.render('entry_editor', {user : req.user});
     }
@@ -21,7 +21,8 @@ router.get('/entry_editor/:entry_name', function(req, res) {
 });
 
 router.get('/entry_editor', function(req, res) {
-  return res.render('entry_editor', {user : req.user});
+  var imagesUrl= req.protocol + '://' + req.get('host') + '/images/your-image-name-here';
+  return res.render('entry_editor', {user : req.user,imagesUrl:imagesUrl});
 });
 
 

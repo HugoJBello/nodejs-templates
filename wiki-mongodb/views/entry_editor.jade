@@ -3,14 +3,7 @@ extends layout_editor
 block content_editor
   link(rel='stylesheet',href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
-  script(type='text/javascript',src='/js/filename_utils.js')
-
-  script.
-    $(function() {
-      $('#liView').attr('class','');
-      $('#liEdit').attr('class','active');
-      $('#liUpload').attr('class','');
-    });  
+  script(type='text/javascript',src='/js/filename_utils.js')  
     
   form(role='form', id='formEntry', action='/entry_editor',method='post')
     if (entry)
@@ -59,7 +52,22 @@ block content_editor
         |});
     
     button.btn.btn-default(type='submit') Submit
-  script
-    |var simplemde = new SimpleMDE({ element: document.getElementById('text') });
+  script.
+    $(function(){
+        $('#liView').attr('class','');
+        $('#liEdit').attr('class','active');
+        $('#liUpload').attr('class','');
+        var simplemde = new SimpleMDE({ 
+        element: document.getElementById('text'),
+        spellChecker: false,
+        insertTexts: {
+      		horizontalRule: ["", "\n\n-----\n\n"],
+      		image: ["![](#{imagesUrl}", ")"],
+      		link: ["[", "](http://)"],
+          table: ["", "\n\n| Column 1 | Column 2 | Column 3 |\n| -------- | -------- | -------- |\n| Text     | Text      | Text     |\n\n"],
+    	   },
+      });
+ 
+    });
     
   
