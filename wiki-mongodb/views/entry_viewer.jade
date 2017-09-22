@@ -9,30 +9,33 @@ block content_editor
       $('#liUpload').attr('class','');
     });  
   if (entry) 
+    br
     div(id='content') 
       !{contentHtml}
     each cat in entry.cathegories
       p
         a(id=cat).label.label-default=cat
         script.
-          $("[id='#{cat}']").attr('href','/cathegory/' + titleToFilename('#{cat}'));
-          var data={};
-          if ('#{cat}'!=''){    
-            data.cathegory_name='#{cat}';
-            $.ajax({
-                      type: 'POST',
-                      url: '/obtain_cathegory_id',
-                      data: JSON.stringify(data),
-                      cache: false,
-                      contentType: "application/json",
-                      timeout: 50000,
-                      success: function(data) {
-                          console.log('success');
-                          console.log(data);
-                          $("[id='#{cat}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=0');
-                        }
-            });
-          }
+          $(function(){
+            $("[id='#{cat}']").attr('href','/cathegory/' + titleToFilename('#{cat}'));
+            var data={};
+            if ('#{cat}'!=''){    
+              data.cathegory_name='#{cat}';
+              $.ajax({
+                        type: 'POST',
+                        url: '/obtain_cathegory_id',
+                        data: JSON.stringify(data),
+                        cache: false,
+                        contentType: "application/json",
+                        timeout: 50000,
+                        success: function(data) {
+                            console.log('success');
+                            console.log(data);
+                            $("[id='#{cat}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=0');
+                          }
+              });
+            }
+          });
      
   if (!entry)
     h1 Editing #{entry.name}

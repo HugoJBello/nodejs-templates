@@ -39,9 +39,13 @@ router.post('/entry_editor', function(req, res) {
                             'updated_at': new Date(),
                             'cathegories':cathegories,
                             'user':req.user});
-  console.log(entry);
   if (req.body.new =='true'){
     entry.created_at = new Date();
+    if(req.user) {
+      entry.edited_by = [req.user.username];
+    } else {
+      entry.edited_by =[];
+    }
     PageEntry.create(entry, function(err,raw){
       if (err) throw err;
       return res.redirect('/entry_viewer/'+req.body.entry_name);
@@ -49,6 +53,7 @@ router.post('/entry_editor', function(req, res) {
   } else  {
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
+      if(req.user) entry.edited_by = entry.edited_by.push(req.user.username);
       return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
   }
@@ -63,12 +68,8 @@ function updateCathegory (cathegory_name){
                                           'created_at': new Date()});
       Cathegory.create(cathegory_new, function(err,raw){
         if (err) throw err;
-        console.log(cathegory_new._id);
-        console.log(cathegory_new);
         });
     } else {
-      console.log(cathegory._id);
-      console.log(cathegory);
     }
   });
 }

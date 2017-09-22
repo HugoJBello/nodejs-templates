@@ -3,6 +3,7 @@ var md = require("marked");
 var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntry   =require('../models/page_entry');
+var perPage = 10;
 
 router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
     Cathegory.findOne({'_id':req.params.cathegory_id}, function(err, cathegory){
@@ -56,11 +57,8 @@ router.post('/cathegory_editor', function(req, res) {
 });
 
 router.post('/obtain_cathegory_id', function(req, res) {
-  console.log(req.body);
-  console.log(req.body.cathegory_name);
   Cathegory.findOne({'name':req.body.cathegory_name}, function(err, cathegory){
     if (err) throw err;
-    console.log(cathegory._id)
     res.type('json');
     res.send({cathegory_id:cathegory._id});
   });
@@ -68,23 +66,19 @@ router.post('/obtain_cathegory_id', function(req, res) {
 
 
 function findEntriesWithCathegory (cathegory_name,page, callback){
-  var perPage = 2;
-  console.log(cathegory_name);
   PageEntry.find({'cathegories':cathegory_name})
   .limit(perPage)
   .skip(perPage * page)
   .exec(function(err, entries){
     if (err) throw err;
     return callback(entries);
-    console.log(entries);
   });
 }
 
  function numberOfPages (cathegory_name,callback){
-   var perPage = 2;
    PageEntry.count({'cathegories':cathegory_name}, function( err, count){
      console.log( "Number of entries", count/perPage );
-     return callback(count/perPage);
+     return callback(Math.floor(count/perPage));
    });
  }
 

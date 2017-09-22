@@ -35,9 +35,15 @@ html
                 i.glyphicon.glyphicon-search
       
       ul.nav.navbar-nav.navbar-right
-        li
-          a(href='/login') Login
-        li
-          a(href='/register') register
+        if (user)
+          li 
+            a(href='/user/#{user.username}') #{user.username}
+          li
+            a(href='/logout') Logout  
+        else 
+          li
+            a(href='/login') Login
+          li
+            a(href='/register') register
         
   block content
