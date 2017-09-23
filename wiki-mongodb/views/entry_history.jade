@@ -37,10 +37,18 @@ block content_editor
            a.page-link(id='previous_page' href='') Previous 
        - for (var i = 0; i < pages; ++i) 
          li.page-item
-          a.page-link(href='/entry_list/page=#{i}') #{i}
+          a.page-link(href='/entry_history/#{entry.name}&page=#{i}') #{i}
        if page<pages
          li.page-item
-           a.page-link(id='next_page' href='') Next   
+           a.page-link(id='next_page' href='') Next  
+     script.
+       var page =parseInt(#{page});
+       var pages=parseInt(#{pages});
+       console.log(pages);
+       var next_page = page +1;
+       var previous_page=page-1;
+       $('#next_page').attr('href',"/entry_history/#{entry.name}&page="+next_page);
+       $('#previous_page').attr('href',"/entry_history/#{entry.name}&page="+previous_page);
   else
     p not entries found.
   

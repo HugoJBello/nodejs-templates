@@ -12,6 +12,7 @@ block content_editor
       
       input(type='hidden' name='_id' value='#{entry._id}')
       input(type='hidden' name='entry_name' value='#{entry.name}')
+      input(type='hidden' name='title' value='#{entry.title}')
       input(type='hidden' name='created_at' value='#{entry.created_at}')
       if (entry.cathegories[0])
         div

@@ -6,18 +6,18 @@ var PageEntryHistory   =require('../models/page_entry_history');
 var perPage = 15;
 
 router.get('/entry_history/:entry_name&page=:page', function(req, res) {
-  numberOfPages(function(pages){
-    findEntries(req.params.page, function(entries){
+  numberOfPages(req.params.entry_name,function(pages){
+    findEntries(req.params.entry_name,req.params.page, function(entries){
       console.log('entries');
-      console.log(entries);
-      return res.render('entry_history', {entries:entries, page:req.params.page,pages:pages, user : req.user});
+      console.log(entries[0]);
+      return res.render('entry_history', {entry:entries[0],entries:entries, page:req.params.page,pages:pages, user : req.user});
     });
   });
 });
 
 
-function findEntries (page, callback){
-  PageEntryHistory.find({})
+function findEntries (name,page, callback){
+  PageEntryHistory.find({'name':name})
   .limit(perPage)
   .skip(perPage * page)
   .sort({'updated_at': 'desc'})
@@ -29,8 +29,8 @@ function findEntries (page, callback){
 }
 
 
- function numberOfPages (callback){
-   PageEntryHistory.count({}, function( err, count){
+ function numberOfPages (name,callback){
+   PageEntryHistory.count({'name':name}, function( err, count){
      console.log( "Number of entries", count/perPage );
      return callback(Math.floor(count/perPage));
    });

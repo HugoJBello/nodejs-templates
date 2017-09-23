@@ -54,16 +54,21 @@ router.post('/entry_editor', function(req, res) {
       return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
     PageEntryHistory.create(entryHistory, function(err,raw){
-      if (err) throw err;
+      if (err) throw err; 
     });
   } else  {
     addUserInfo(entry, entryHistory, req)
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
+      entryHistory.title=entry.title;
+      console.log('ñ----');
+      console.log(entryHistory.title);
+      PageEntryHistory.create(entryHistory, function(err,raw){
+        if (err) throw err;
+      });
+      console.log(entryHistory);
+      console.log(entry);
       return res.redirect('/entry_viewer/'+req.body.entry_name);
-    });
-    PageEntryHistory.create(entryHistory, function(err,raw){
-      if (err) throw err;
     });
   }
 });
