@@ -29,21 +29,34 @@ var Storage = multer.diskStorage({
 
  router.post("/upload/:entry_name", function(req, res) {
    PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
-     if (err) throw err;
+      if (err) throw err;
+      var result ='';
      upload(req, res, function(err) {
        if (err) {
          return res.render('upload', {entry:entry, user : req.user, result:"Something went wrong!"});
        }
+       var urls =[];
        for (var i=0; i< req.files.length; i++){
-         var file = new File({'filename':req.files[i].filename,
-                            'base64':base64_encode("./public/uploads/" + req.files[i].filename),
+         var filename = cleanFilename(req.files[i].filename);
+         var file = new File({'filename':filename,
+                            'base64':base64_encode("./public/uploads/" +req.files[i].filename),
                             'modified_at': new Date()});
         File.create(file, function(err,raw){
-            if (err) throw err;
+            if (err) {
+              result = result+ 'Problems uploading file, perhaps the file was already uploaded.\n'
+              console.log(result);
+            };
           //delete the file...
         });
+        urls.push(req.protocol + '://' + req.get('host') + '/images/' + filename);
       }
-      return res.render('upload', {entry:entry, user : req.user, result: "File uploaded sucessfully!"});
+      if (req.files.length ===1){
+        result = result+ "Upload complete, here is the url, use them to include the images in the edit tab."
+      } else {
+        result =  result+ "Upload complete, se them to include the images in the edit tab"
+      }
+
+      return res.render('upload', {entry:entry, user : req.user, result: result, urls: urls});
      });
    });
  });
@@ -67,4 +80,11 @@ var Storage = multer.diskStorage({
      // convert binary data to base64 encoded string
      return new Buffer(bitmap).toString('base64');
  }
+
+ function cleanFilename(title){
+   var name = '';
+   name=title.replace(/[^a-z0-9\.]/gi, '_').toLowerCase();
+   return name;
+ }
+
 module.exports = router;

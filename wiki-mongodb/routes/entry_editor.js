@@ -1,5 +1,7 @@
 var express = require('express');
 var PageEntry   =require('../models/page_entry');
+var PageEntryHistory   =require('../models/page_entry_history');
+
 var md = require("marked");
 var router = express.Router();
 var Cathegory = require('../models/cathegory');
@@ -37,29 +39,44 @@ router.post('/entry_editor', function(req, res) {
                             'title':req.body.title,
                             'content':req.body.content,
                             'updated_at': new Date(),
-                            'cathegories':cathegories,
-                            'user':req.user});
+                            'cathegories':cathegories});
+  var entryHistory = new PageEntryHistory({'name':req.body.entry_name,
+                                          'title':req.body.title,
+                                          'content':req.body.content,
+                                          'updated_at': new Date(),
+                                          'cathegories':cathegories});
   if (req.body.new =='true'){
     entry.created_at = new Date();
-    if(req.user) {
-      entry.edited_by = [req.user.username];
-    } else {
-      entry.edited_by =[];
-    }
+    entryHistory.created_at = new Date();
+    addUserInfo(entry, entryHistory, req)
     PageEntry.create(entry, function(err,raw){
       if (err) throw err;
       return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
+    PageEntryHistory.create(entryHistory, function(err,raw){
+      if (err) throw err;
+    });
   } else  {
+    addUserInfo(entry, entryHistory, req)
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
-      if(req.user) entry.edited_by = entry.edited_by.push(req.user.username);
       return res.redirect('/entry_viewer/'+req.body.entry_name);
+    });
+    PageEntryHistory.create(entryHistory, function(err,raw){
+      if (err) throw err;
     });
   }
 });
 
-
+function addUserInfo(entry, entryHistory, req){
+  if(req.user) {
+    entry.edited_by = req.user.username;
+    entryHistory.edited_by = req.user.username;
+  } else {
+    entry.edited_by ='[Unregistered User]';
+    entryHistory.edited_by ='[Unregistered User]';
+  }
+}
 function updateCathegory (cathegory_name){
   Cathegory.findOne({'name':cathegory_name}, function(err, cathegory){
     if (err) throw err;

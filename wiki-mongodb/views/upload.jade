@@ -8,10 +8,14 @@ block content_editor
         input(id='file' type='file', name='imgUploader', multiple='')
       .form-group
         input#btnSubmit(type='submit', name='submit', value='Upload')
-        if(result)
-          p#result
-            |#{result}
-      
+    if(result)
+      p#result
+        |#{result}
+    if(urls)
+      each url in urls
+        br
+        a(href='#{url}')
+          | #{url}              
   script.
     $(function() {
       $('#liView').attr('class','');

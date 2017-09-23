@@ -5,12 +5,24 @@ block content
   
   if (entries) 
     h2 Last entries
-    each entry in entries
-      p
-        a(id=entry.entry_name href='/entry_viewer/#{entry.name}')
-          | #{entry.title}
-        input(id='page' type='hidden' value='#{page}' )
-        input(id='pages' type='hidden' value '#{pages}')
+    table.table
+      thead
+        tr
+          td Title
+          td Updated at
+          td User
+      tbody
+        each entry in entries
+          tr   
+            td 
+              a(id=entry.entry_name href='/entry_viewer/#{entry.name}')
+                | #{entry.title}
+            td
+              | #{entry.updated_at}
+            td
+              a(id=entry.edited_by href='/users/#{entry.edited_by}&page=0')
+                | #{entry.edited_by}
+        
     p
       |showing page !{page} of !{pages}. 
       

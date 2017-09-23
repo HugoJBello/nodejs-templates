@@ -10,7 +10,7 @@ var schema = new Schema(
   author: String,
   content:String,
   cathegories: [String],
-  edited_by:[String]},
+  edited_by:String},
   { collection : 'PageEntries' });
 
 var PageEntry = mongoose.model('PageEntry', schema);

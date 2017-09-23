@@ -21,8 +21,8 @@ block content
         a(href='/upload/#{entry.name}') Add image
           |  
           div.glyphicon.glyphicon-picture
-      li
-        a(href='#') History
+      li(id='liHistory')
+        a(href='/entry_history/#{entry.name}&page=0') History
       //- li(type='hidden' id='liSave')
       //-   a(type='hidden') Save
   else

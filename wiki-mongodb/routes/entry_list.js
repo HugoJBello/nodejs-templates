@@ -3,7 +3,7 @@ var md = require("marked");
 var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntry   =require('../models/page_entry');
-var perPage = 5;
+var perPage = 15;
 
 router.get('/entry_list/page=:page', function(req, res) {
   numberOfPages(function(pages){

@@ -13,6 +13,7 @@ var routesIndex = require('./routes/index');
 var routesEntryViewer = require('./routes/entry_viewer');
 var routesEntryList = require('./routes/entry_list');
 var routesEntryEditor = require('./routes/entry_editor');
+var routesEntryHistory = require('./routes/entry_history');
 var routesCathegories = require('./routes/cathegories');
 var routesUploader = require('./routes/uploader');
 
@@ -46,6 +47,8 @@ app.use('/', routesEntryList);
 app.use('/', routesEntryEditor);
 app.use('/', routesCathegories);
 app.use('/', routesUploader);
+app.use('/', routesEntryHistory);
+
 
 
 // passport config
@@ -55,8 +58,8 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 // mongoose
-mongoose.connect('mongodb://localhost:27017/hjbello');
-//mongoose.connect('mongodb://hjbello:3141592625@ds121494.mlab.com:21494/hjbello');
+//mongoose.connect('mongodb://localhost:27017/hjbello');
+mongoose.connect('mongodb://hjbello:3141592625@ds121494.mlab.com:21494/hjbello');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
