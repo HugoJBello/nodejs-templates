@@ -24,7 +24,7 @@ block content_editor
               a(id=entry.updated_at href='/entry_viewer_history/#{entry.entry_name}&date=#{entry.updated_at}')
                 | #{entry.updated_at}
             td
-              a(id=entry.edited_by href='/users/#{entry.edited_by}&page=0')
+              a(id=entry.edited_by href='/users/#{entry.edited_by}&page=1')
                 | #{entry.edited_by}
         
     p
@@ -32,10 +32,10 @@ block content_editor
       
     nav(aria-label='Page navigation example')
      ul.pagination(id='list_pages')
-       if page!=0
+       if page!=1
          li.page-item
            a.page-link(id='previous_page' href='') Previous 
-       - for (var i = 0; i < pages; ++i) 
+       - for (var i = 1; i <= pages; ++i) 
          li.page-item
           a.page-link(href='/entry_history/#{entry.name}&page=#{i}') #{i}
        if page<pages

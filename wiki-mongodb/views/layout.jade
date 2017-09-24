@@ -24,7 +24,7 @@ html
         li
           a(href='/entry_editor') New Page
         li
-          a(href='/entry_list/page=0') Last entries
+          a(href='/entry_list/page=1') Last entries
                 
       .col-sm-3.col-md-3
         form.navbar-form(role='search')
@@ -37,7 +37,7 @@ html
       ul.nav.navbar-nav.navbar-right
         if (user)
           li 
-            a(href='/user/#{user.username}') #{user.username}
+            a(href='/user/#{user.username}&page=1') #{user.username}
           li
             a(href='/logout') Logout  
         else 

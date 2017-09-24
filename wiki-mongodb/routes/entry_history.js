@@ -1,6 +1,5 @@
 var express = require('express');
 var md = require("marked");
-var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntryHistory   =require('../models/page_entry_history');
 var perPage = 15;
@@ -17,6 +16,7 @@ router.get('/entry_history/:entry_name&page=:page', function(req, res) {
 
 
 function findEntries (name,page, callback){
+  page = page -1;
   PageEntryHistory.find({'name':name})
   .limit(perPage)
   .skip(perPage * page)
@@ -32,7 +32,7 @@ function findEntries (name,page, callback){
  function numberOfPages (name,callback){
    PageEntryHistory.count({'name':name}, function( err, count){
      console.log( "Number of entries", count/perPage );
-     return callback(Math.floor(count/perPage));
+     return callback(Math.floor(count/perPage)+1);
    });
  }
 

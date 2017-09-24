@@ -1,6 +1,5 @@
 var express = require('express');
 var md = require("marked");
-var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntry   =require('../models/page_entry');
 var perPage = 10;
@@ -27,6 +26,7 @@ router.post('/entry_list/page=:page', function(req, res) {
 
 
 function findEntriesWithName (name,page, callback){
+  page = page-1;
   console.log(name);
   PageEntry.find({'name':name})
   .limit(perPage)
@@ -40,6 +40,7 @@ function findEntriesWithName (name,page, callback){
 }
 
 function findEntries (page, callback){
+  page = page-1;
   PageEntry.find({})
   .limit(perPage)
   .skip(perPage * page)
@@ -55,14 +56,14 @@ function findEntries (page, callback){
  function numberOfPagesSearch (name,callback){
    PageEntry.count({'title':name}, function( err, count){
      console.log( "Number of entries", count/perPage );
-     return callback(Math.floor(count/perPage));
+     return callback(Math.floor(count/perPage)+1);
    });
  }
 
  function numberOfPages (callback){
    PageEntry.count({}, function( err, count){
      console.log( "Number of entries", count/perPage );
-     return callback(Math.floor(count/perPage));
+     return callback(Math.floor(count/perPage)+1);
    });
  }
 

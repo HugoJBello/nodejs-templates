@@ -6,8 +6,15 @@ var md = require("marked");
 var path = require("path");
 var router = express.Router();
 
+var isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/');
+}
 
-router.get('/entry_viewer/:entry_name', function(req, res) {
+router.get('/entry_viewer/:entry_name',
+ //isAuthenticated,
+ function(req, res) {
     PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
       if (err) throw err;
       if (!entry){
