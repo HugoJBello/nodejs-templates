@@ -5,13 +5,18 @@ var PageEntryHistory   =require('../models/page_entry_history');
 var perPage = 15;
 
 router.get('/entry_history/:entry_name&page=:page', function(req, res) {
-  numberOfPages(req.params.entry_name,function(pages){
-    findEntries(req.params.entry_name,req.params.page, function(entries){
-      console.log('entries');
-      console.log(entries[0]);
-      return res.render('entry_history', {entry:entries[0],entries:entries, page:req.params.page,pages:pages, user : req.user});
+  if(req.params.page>=1){
+    numberOfPages(req.params.entry_name,function(pages){
+      findEntries(req.params.entry_name,req.params.page, function(entries){
+        console.log('entries');
+        console.log(entries[0]);
+        return res.render('entry_history', {entry:entries[0],entries:entries, page:req.params.page,pages:pages, user : req.user});
+      });
     });
-  });
+  } else {
+    return res.render('entry_history', {page:req.params.page,pages:1, user : req.user});
+
+  }
 });
 
 

@@ -5,13 +5,18 @@ var PageEntry   =require('../models/page_entry');
 var perPage = 10;
 
 router.get('/entry_list/page=:page', function(req, res) {
-  numberOfPages(function(pages){
-    findEntries(req.params.page, function(entries){
-      console.log('entries');
-      console.log(entries);
-      return res.render('entry_list', {entries:entries, page:req.params.page,pages:pages, user : req.user});
+  if(req.params.page>=1){
+    numberOfPages(function(pages){
+      findEntries(req.params.page, function(entries){
+        console.log('entries');
+        console.log(entries);
+        return res.render('entry_list', {entries:entries, page:req.params.page,pages:pages, user : req.user});
+      });
     });
-  });
+  } else {
+    return res.render('entry_list', {page:req.params.page,pages:1, user : req.user});
+
+  }
 });
 
 router.post('/entry_list/page=:page', function(req, res) {
