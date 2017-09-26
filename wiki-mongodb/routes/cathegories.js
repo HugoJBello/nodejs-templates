@@ -6,6 +6,7 @@ var PageEntry   =require('../models/page_entry');
 var perPage = 10;
 
 router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
+  if (req.params.page>=1){
     Cathegory.findOne({'_id':req.params.cathegory_id}, function(err, cathegory){
       if (err) throw err;
       if (!cathegory){
@@ -22,6 +23,10 @@ router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
         });
         }
     });
+  }   else {
+    return res.render('cathegory', {page:req.params.page,pages:pages, user : req.user});
+  }
+
 });
 
 router.get('/cathegory_editor/:cathegory_id', function(req, res) {
@@ -66,6 +71,7 @@ router.post('/obtain_cathegory_id', function(req, res) {
 
 
 function findEntriesWithCathegory (cathegory_name,page, callback){
+  page=page-1
   PageEntry.find({'cathegories':cathegory_name})
   .limit(perPage)
   .skip(perPage * page)

@@ -18,10 +18,10 @@ block content
       
     nav(aria-label='Page navigation example')
      ul.pagination(id='list_pages')
-       if page!=0
+       if page!=1
          li.page-item
            a.page-link(id='previous_page' href='') Previous 
-       - for (var i = 0; i < pages; ++i) 
+       - for (var i = 1; i <= pages; ++i) 
          li.page-item
           a.page-link(href='/cathegory/cat=#{cathegory._id}&page=#{i}') #{i}
        if page<pages

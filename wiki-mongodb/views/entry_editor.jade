@@ -31,28 +31,54 @@ block content_editor
     if(!entry)
       input(id='is_new' type='hidden' name='new' value='true')
       p.lead(value='Creating new entry with title: ')
-      input(id='title' type='text'  name='title' value='Title')
+      input(id='title' type='text'  name='title' value='Title')  
+      div(id='div_available')
+        font(color='red')
+          |(the title can not be empty)
+      br
       emph Entry name: 
       div(id='div_entry_name' value = 'title')
-      input(id='entry_name_hidden' type='hidden' name='entry_name')
+      input(id='entry_name_hidden' type='hidden' name='entry_name')  
       textarea(id = 'text' cols='45' rows='20' name='content')
       div
         |Cathegories: 
         p
           input(name='cathegoriesSemicolom', id='cathegories', value='categories separated by ;')
-      script
-        |var divEntryName = $( "#div_entry_name" );
-        |var inputEntryNameHidden = $( "#entry_name_hidden" );
-        |var title = $("#title");
-        |$(document).ready(function(){
-        |  title.keyup(function(){
-        |   divEntryName.html(titleToFilename(title.val()));
-        |   inputEntryNameHidden.val(titleToFilename(title.val()));
-        |   console.log(inputEntryNameHidden.val());
-        | });
-        |});
+      script.
+        var divEntryName = $( "#div_entry_name" );
+        var inputEntryNameHidden = $( "#entry_name_hidden" );
+        var title = $("#title");
+        $(document).ready(function(){
+          title.keyup(function(){
+          var entry_name = titleToFilename(title.val());
+           divEntryName.html();
+           inputEntryNameHidden.val(entry_name);
+           divEntryName.html(entry_name);
+           var data={};
+           data.entry_name=entry_name;
+           $.ajax({
+                     type: 'GET',
+                     url: '/check_if_available/'+entry_name,
+                     cache: false,
+                     contentType: "application/json",
+                     timeout: 50000,
+                     success: function(data) {
+                         console.log('success');
+                         console.log(data);
+                         if (data.used =='true'){
+                           $('#div_available').html('<font color="red">(used title)</font>');
+                           $('#button').prop("disabled",true);
+                         } else {
+                           $('#div_available').html('<font color="green">(available)</font>');
+                           $('#button').prop("disabled",false);
+                         }
+                         
+                       }
+           });
+         });
+        });
     
-    button.btn.btn-default(type='submit') Submit
+    button(id='button').btn.btn-default(type='submit') Submit
   script.
     $(function(){
         $('#liView').attr('class','');

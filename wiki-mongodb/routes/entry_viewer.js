@@ -14,7 +14,7 @@ var isAuthenticated = function (req, res, next) {
 
 router.get('/entry_viewer/:entry_name',
  //isAuthenticated,
- function(req, res) {
+ function(req, res) { 
     PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
       if (err) throw err;
       if (!entry){

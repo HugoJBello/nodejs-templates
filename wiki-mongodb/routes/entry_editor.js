@@ -54,7 +54,7 @@ router.post('/entry_editor', function(req, res) {
       return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
     PageEntryHistory.create(entryHistory, function(err,raw){
-      if (err) throw err; 
+      if (err) throw err;
     });
   } else  {
     addUserInfo(entry, entryHistory, req)
@@ -82,6 +82,7 @@ function addUserInfo(entry, entryHistory, req){
     entryHistory.edited_by ='[Unregistered User]';
   }
 }
+
 function updateCathegory (cathegory_name){
   Cathegory.findOne({'name':cathegory_name}, function(err, cathegory){
     if (err) throw err;
@@ -96,5 +97,17 @@ function updateCathegory (cathegory_name){
   });
 }
 
+router.get('/check_if_available/:entry_name', function(req, res) {
+  PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
+    if (err) throw err;
+    if(entry){
+      console.log('true')
+      return res.send({used:'true'})
+      } else {
+        console.log('false')
+        return res.send({used:'false'})
+      }
+  });
+});
 
 module.exports = router;
