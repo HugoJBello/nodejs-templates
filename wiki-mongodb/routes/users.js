@@ -8,12 +8,16 @@ var perPage = 10;
 
 /* GET users listing. */
 router.get('/user/:username&page=:page', function(req, res, next) {
-  numberOfPages(req.params.username,function(pages){
-    findEntries(req.params.username,req.params.page, function(entries){
-       console.log(entries[0]);
-      return res.render('user_history', {username:req.params.username,entries:entries, page:req.params.page,pages:pages, user : req.user});
+  if (req.params.page>=1){
+    numberOfPages(req.params.username,function(pages){
+      findEntries(req.params.username,req.params.page, function(entries){
+         console.log(entries[0]);
+        return res.render('user_history', {username:req.params.username,entries:entries, page:req.params.page,pages:pages, user : req.user});
+      });
     });
-  });
+  } else {
+    return res.render('user_history', {username:req.params.username,page:req.params.page,user : req.user});
+  }
 });
 
 
