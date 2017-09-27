@@ -15,7 +15,7 @@ router.get('/entry_history/:entry_name&page=:page', function(req, res) {
     });
   } else {
     return res.render('entry_history', {page:req.params.page,pages:1, user : req.user});
-  }
+  } 
 });
 
 

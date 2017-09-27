@@ -24,7 +24,7 @@ block content_editor
               a(id=entry.updated_at href='/entry_viewer_history/#{entry.entry_name}&date=#{entry.updated_at}')
                 | #{entry.updated_at}
             td
-              a(id=entry.edited_by href='/users/#{entry.edited_by}&page=1')
+              a(id=entry.edited_by href='/user/#{entry.edited_by}&page=1')
                 | #{entry.edited_by}
         
     p

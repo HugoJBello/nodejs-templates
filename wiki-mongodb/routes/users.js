@@ -17,7 +17,7 @@ router.get('/user/:username&page=:page', function(req, res, next) {
     });
   } else {
     return res.render('user_history', {username:req.params.username,page:req.params.page,user : req.user});
-  }
+  } 
 });
 
 
