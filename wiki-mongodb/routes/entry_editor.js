@@ -61,13 +61,9 @@ router.post('/entry_editor', function(req, res) {
     PageEntry.findByIdAndUpdate(req.body._id, entry, function(err,raw){
       if (err) throw err;
       entryHistory.title=entry.title;
-      console.log('ñ----');
-      console.log(entryHistory.title);
       PageEntryHistory.create(entryHistory, function(err,raw){
         if (err) throw err;
       });
-      console.log(entryHistory);
-      console.log(entry);
       return res.redirect('/entry_viewer/'+req.body.entry_name);
     });
   }
@@ -101,10 +97,8 @@ router.get('/check_if_available/:entry_name', function(req, res) {
   PageEntry.findOne({'name':req.params.entry_name}, function(err, entry){
     if (err) throw err;
     if(entry){
-      console.log('true')
       return res.send({used:'true'})
       } else {
-        console.log('false')
         return res.send({used:'false'})
       }
   });

@@ -1,0 +1,67 @@
+extends layout
+
+block content
+  script(type='text/javascript',src='/js/filename_utils.js')
+  
+  if (cathegories) 
+    h2 Cathegories
+    table.table
+      thead
+        tr
+          td Name
+          td Number of entries
+      tbody
+        - for (var i = 0; i <=cathegories.length; ++i)
+          tr   
+            td 
+              a(id=cathegory.name)
+                | #{cathegory.name}
+                script.
+                  $("[id='#{cathegories[i].name}']").attr('href','/cathegory/' + titleToFilename('#{cathegories[i].name}'));
+                  var data={};
+                  if ('#{cathegories[i].name}'!=''){    
+                    data.cathegory_name='##{cathegories[i].name}';
+                    $.ajax({
+                              type: 'POST',
+                              url: '/obtain_cathegory_id',
+                              data: JSON.stringify(data),
+                              cache: false,
+                              contentType: "application/json",
+                              timeout: 50000,
+                              success: function(data) {
+                                  console.log('success');
+                                  console.log(data);
+                                  $("[id='#{cathegories[i].name}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=1');
+                                }
+                    });
+                  }
+            td
+              | #{entriesForEachCathegory[i]}
+        
+    p
+      |showing page !{page} of !{pages}. 
+      
+    nav(aria-label='Page navigation example')
+     ul.pagination(id='list_pages')
+       if page!=1
+         li.page-item
+           a.page-link(id='previous_page' href='') Previous 
+       - for (var i = 1; i <= pages; ++i) 
+         li.page-item
+          a.page-link(href='/cathegories/page=#{i}') #{i}
+       if page<pages
+         li.page-item
+           a.page-link(id='next_page' href='') Next
+     script.
+       $(function(){
+         var page =parseInt(#{page});
+         var pages=parseInt(#{pages});
+         console.log(pages);
+         var next_page = page +1;
+         var previous_page=page-1;
+         $('#next_page').attr('href',"/cathegories/page="+next_page);
+         $('#previous_page').attr('href',"/cathegories/page="+previous_page);
+       });
+  else
+    p not entries found.
+  

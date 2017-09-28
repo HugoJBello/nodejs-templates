@@ -17,6 +17,7 @@ var routesEntryHistory = require('./routes/entry_history');
 var routesUserHistory = require('./routes/users');
 var routesCathegories = require('./routes/cathegories');
 var routesUploader = require('./routes/uploader');
+var routesCathegoriesList = require('./routes/cathegories_list');
 
 var users = require('./routes/users');
 
@@ -50,6 +51,7 @@ app.use('/', routesCathegories);
 app.use('/', routesUploader);
 app.use('/', routesEntryHistory);
 app.use('/', routesUserHistory);
+app.use('/', routesCathegoriesList);
 
 
 // passport config
