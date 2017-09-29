@@ -7,9 +7,14 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='http://code.jquery.com/jquery.js')
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-
+    style(type='text/css').
+      .navbar-fixed-top {
+      background-color: #d6d6c2;
+      background-image: none;
+      }
+  
   body
-  nav.navbar.navbar-default(role='navigation')
+  nav.navbar.navbar-fixed-top(role='navigation')
     // Brand and toggle get grouped for better mobile display
     .navbar-header
       button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')

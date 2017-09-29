@@ -8,7 +8,7 @@ router.get('/entry_list/page=:page', function(req, res) {
   if(req.params.page>=1){
     numberOfPages(function(pages){
       findEntries(req.params.page, function(entries){
-        console.log('entries');
+        console.log('entries');    
         console.log(entries);
         return res.render('entry_list', {entries:entries, page:req.params.page,pages:pages, user : req.user});
       });
