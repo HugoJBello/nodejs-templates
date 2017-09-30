@@ -3,26 +3,32 @@ var md = require("marked");
 var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntry   =require('../models/page_entry');
-var SN = require('sync-node');
-var pn = SN.createQueue();
-
 var perPage = 10;
 
 router.get('/cathegories/page=:page', function(req, res) {
   if (req.params.page>=1){
-    numberOfPagesCathegoriesList(function(pages){
-      findCathegories(req.params.page, function(cathegories, entriesForEachCathegory){
-        console.log(entriesForEachCathegory);
-        console.log(cathegories);
-        return res.render('cathegories', {page:req.params.page,pages:pages,
-                                          cathegories: cathegories,
-                                          entriesForEachCathegory: entriesForEachCathegory,
-                                          user : req.user});
-      });
-    });
-  }  else {
+        numberOfPagesCathegoriesList(function(pages){
+          findCathegories(req.params.page, function(cathegories){
+            var entriesForEachCathegory = [];
+            for (var i=0; i<=cathegories.length; i++){
+              (function(i){
+                if (cathegories[i]){
+                  countEntriesWithCathegory(cathegories[i].name,function(count){
+                    entriesForEachCathegory.push(count);
+                  })
+                } else {
+                  entriesForEachCathegory.push(0);
+                }
+              })(i)
+            }
+            return res.render('cathegories', {cathegories:cathegories, entriesForEachCathegory:entriesForEachCathegory,
+                                            page:req.params.page,pages:pages, user : req.user});
+          });
+        });
+        }  else {
     return res.render('cathegories', {page:req.params.page,pages:pages, user : req.user});
   }
+
 });
 
 function findCathegories (page, callback){
@@ -32,18 +38,7 @@ function findCathegories (page, callback){
   .skip(perPage * page)
   .exec(function(err, cathegories){
     if (err) throw err;
-    var entriesForEachCathegory = [];
-    for (var i=0; i<cathegories.length; i++){
-        if (cathegories[i]){
-          countEntriesWithCathegory(cathegories[i].name,function(count){
-            entriesForEachCathegory.push(count);
-            console.log(entriesForEachCathegory);
-          });
-        } else {
-          entriesForEachCathegory.push(0);
-        }
-    }
-    return callback(cathegories,entriesForEachCathegory);
+    return callback(cathegories);
   });
 }
 
@@ -55,10 +50,23 @@ function countEntriesWithCathegory (cathegory_name, callback){
   });
 }
 
+router.post('/obtain_cathegory_id', function(req, res) {
+  Cathegory.findOne({'name':req.body.cathegory_name}, function(err, cathegory){
+    if (err) throw err;
+    countEntriesWithCathegory(req.body.cathegory_name, function(count){
+      res.type('json');
+      if (cathegory){
+        res.send({cathegory_id:cathegory._id, count: count});
+      } else {
+        res.send({cathegory_id:''});
+      }
+    });
+  });
+});
 
  function numberOfPagesCathegoriesList (callback){
    Cathegory.count({}, function( err, count){
-      return callback(Math.floor(count/perPage));
+      return callback(Math.floor(count/perPage)+1);
    });
  }
 

@@ -6,7 +6,7 @@ var PageEntry   =require('../models/page_entry');
 var perPage = 10;
 
 router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
-  if (req.params.page>=1){
+  if (req.params.page>=1){ 
     Cathegory.findOne({'_id':req.params.cathegory_id}, function(err, cathegory){
       if (err) throw err;
       if (!cathegory){
@@ -59,18 +59,6 @@ router.post('/cathegory_editor', function(req, res) {
       return res.redirect('/cathegory/'+req.body._id);
     });
   }
-});
-
-router.post('/obtain_cathegory_id', function(req, res) {
-  Cathegory.findOne({'name':req.body.cathegory_name}, function(err, cathegory){
-    if (err) throw err;
-    res.type('json');
-    if (cathegory){
-      res.send({cathegory_id:cathegory._id});
-    } else {
-      res.send({cathegory_id:''});
-    }
-  });
 });
 
 
