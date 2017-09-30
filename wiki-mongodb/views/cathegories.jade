@@ -12,32 +12,33 @@ block content
           td Number of entries
       tbody
         - for (var i = 0; i <=cathegories.length; ++i)
-          tr   
-            td 
-              a(id=cathegory.name)
-                | #{cathegory.name}
-                script.
-                  $("[id='#{cathegories[i].name}']").attr('href','/cathegory/' + titleToFilename('#{cathegories[i].name}'));
-                  var data={};
-                  if ('#{cathegories[i].name}'!=''){    
-                    data.cathegory_name='##{cathegories[i].name}';
-                    $.ajax({
-                              type: 'POST',
-                              url: '/obtain_cathegory_id',
-                              data: JSON.stringify(data),
-                              cache: false,
-                              contentType: "application/json",
-                              timeout: 50000,
-                              success: function(data) {
-                                  console.log('success');
-                                  console.log(data);
-                                  $("[id='#{cathegories[i].name}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=1');
-                                }
-                    });
-                  }
-            td
-              | #{entriesForEachCathegory[i]}
-        
+          if (cathegories[i])
+            tr   
+              td 
+                a(id=cathegories[i].name)
+                  | #{cathegories[i].name}
+                  script.
+                    $("[id='#{cathegories[i].name}']").attr('href','/cathegory/' + titleToFilename('#{cathegories[i].name}'));
+                    var data={};
+                    if ('#{cathegories[i].name}'!=''){    
+                      data.cathegory_name='##{cathegories[i].name}';
+                      $.ajax({
+                                type: 'POST',
+                                url: '/obtain_cathegory_id',
+                                data: JSON.stringify(data),
+                                cache: false,
+                                contentType: "application/json",
+                                timeout: 50000,
+                                success: function(data) {
+                                    console.log('success');
+                                    console.log(data);
+                                    $("[id='#{cathegories[i].name}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=1');
+                                  }
+                      });
+                    }
+              td
+                | #{entriesForEachCathegory[i]}
+          
     p
       |showing page !{page} of !{pages}. 
       

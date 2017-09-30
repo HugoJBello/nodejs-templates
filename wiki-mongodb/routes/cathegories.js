@@ -65,7 +65,11 @@ router.post('/obtain_cathegory_id', function(req, res) {
   Cathegory.findOne({'name':req.body.cathegory_name}, function(err, cathegory){
     if (err) throw err;
     res.type('json');
-    res.send({cathegory_id:cathegory._id});
+    if (cathegory){
+      res.send({cathegory_id:cathegory._id});
+    } else {
+      res.send({cathegory_id:''});
+    }
   });
 });
 
