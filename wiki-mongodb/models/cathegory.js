@@ -6,8 +6,9 @@ var Schema = mongoose.Schema;
 var CathegorySchema = new Schema(
   {name:{ type: String, required: true, unique: true },
   description: String,
+  number_of_entries: String,
   created_at: Date,
-  updated_at: Date},
+  updated_at: Date}, 
   { collection : 'Cathegories' });
 
 // the schema is useless so far

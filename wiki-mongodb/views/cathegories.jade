@@ -8,8 +8,53 @@ block content
     table.table.table-striped
       thead
         tr
-          td Name
-          td Number of entries
+          td
+            if ((sort=='name')&& (order=='-1'))
+              a(href='/cathegories/sort=name&order=1&page=1')
+                |Name 
+                span.glyphicon.glyphicon-sort-by-alphabet-alt
+            else
+              if ((sort=='name')&& (order=='1'))
+                a(href='/cathegories/sort=name&order=-1&page=1')
+                  |Name 
+                  span.glyphicon.glyphicon-sort-by-alphabet
+              else
+                a(href='/cathegories/sort=name&order=-1&page=1')
+                  |Name 
+                  small
+                    span.glyphicon.glyphicon-sort
+                
+     
+          td
+            if ((sort=='number_of_entries')&& (order=='-1'))
+              a(href='/cathegories/sort=number_of_entries&order=1&page=1')
+                |Number of entries 
+                span.glyphicon.glyphicon-sort-by-attributes-alt
+            else
+              if ((sort=='number_of_entries')&& (order=='1'))
+                a(href='/cathegories/sort=number_of_entries&order=-1&page=1')
+                  |Number of entries 
+                  span.glyphicon.glyphicon-sort-by-attributes
+              else
+                a(href='/cathegories/sort=number_of_entries&order=-1&page=1')
+                  |Number of entries 
+                  small
+                    span.glyphicon.glyphicon-sort
+          td
+            if ((sort=='updated_at')&& (order=='-1'))
+              a(href='/cathegories/sort=updated_at&order=1&page=1')
+                |Updated at  
+                span.glyphicon.glyphicon-sort-by-attributes-alt
+            else
+              if ((sort=='updated_at')&& (order=='1'))
+                a(href='/cathegories/sort=updated_at&order=-1&page=1')
+                  |Updated at 
+                  span.glyphicon.glyphicon-sort-by-attributes
+              else
+                a(href='/cathegories/sort=updated_at&order=-1&page=1')
+                  |Updated at 
+                  small
+                    span.glyphicon.glyphicon-sort
       tbody
         - for (var i = 0; i <=cathegories.length; ++i)
           if (cathegories[i])
@@ -19,7 +64,7 @@ block content
                   | #{cathegories[i].name}            
               td
                 div(id='count_#{cathegories[i].name}')
-                  | #{entriesForEachCathegory[i]}
+                  | #{cathegories[i].number_of_entries}
                 script.
                   $("[id='#{cathegories[i].name}']").attr('href','/cathegory/' + titleToFilename('#{cathegories[i].name}'));
                   var data={};
@@ -36,11 +81,12 @@ block content
                                   console.log('success');
                                   console.log(data);
                                   $("[id='#{cathegories[i].name}']").attr('href','/cathegory/cat=' + data.cathegory_id+'&page=1');
-                                  $("[id='count_#{cathegories[i].name}']").html(data.count);
 
                                 }
                     });
                   }
+              td
+                | #{cathegories[i].updated_at} 
     p
       |showing page !{page} of !{pages}. 
       
@@ -51,7 +97,7 @@ block content
            a.page-link(id='previous_page' href='') Previous 
        - for (var i = 1; i <= pages; ++i) 
          li.page-item
-          a.page-link(href='/cathegories/page=#{i}') #{i}
+          a.page-link(href='/cathegories/sort=#{sort}&order=#{order}&page=#{i}') #{i}
        if page<pages
          li.page-item
            a.page-link(id='next_page' href='') Next
@@ -62,8 +108,8 @@ block content
          console.log(pages);
          var next_page = page +1;
          var previous_page=page-1;
-         $('#next_page').attr('href',"/cathegories/page="+next_page);
-         $('#previous_page').attr('href',"/cathegories/page="+previous_page);
+         $('#next_page').attr('href',"/cathegories/sort=#{sort}&order=#{order}&page="+next_page);
+         $('#previous_page').attr('href',"/cathegories/sort=#{sort}&order=#{order}&page="+previous_page);
        });
   else
     p not entries found.

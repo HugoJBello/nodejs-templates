@@ -12,46 +12,72 @@ html
       background-color: #d6d6c2;
       background-image: none;
       }
-  
+      small { 
+      font-size: 60%;
+      }
+      .small-icon{
+        font-size: 70%;
+      }
+    
   body
-  nav.navbar.navbar-fixed-top(role='navigation')
-    // Brand and toggle get grouped for better mobile display
-    .navbar-header
-      button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-      a.navbar-brand(href='/') Wiki
-        //img(src="http://esbcn01l127776:3000/images/logo_small.png" width="42" height="42") 
-    // Collect the nav links, forms, and other content for toggling
-    #bs-example-navbar-collapse-1.collapse.navbar-collapse
-      ul.nav.navbar-nav
-        li
-          a(href='/entry_editor') New Page
-        li
-          a(href='/entry_list/page=1') Last entries
-        li
-          a(href='/cathegories/page=1') Cathegories
-                
-      .col-sm-3.col-md-3
-        form.navbar-form(role='search')
-          .input-group
-            input.form-control(type='text', placeholder='Search', name='q')
-            .input-group-btn
-              button.btn.btn-default(type='submit')
-                i.glyphicon.glyphicon-search
-      
-      ul.nav.navbar-nav.navbar-right
-        if (user)
-          li 
-            a(href='/user/#{user.username}&page=1') #{user.username}
-          li
-            a(href='/logout') Logout  
-        else 
-          li
-            a(href='/login') Login
-          li
-            a(href='/register') register
+  .col-sm-12
+    .sidebar-nav
+      div.navbar.navbar-default.navbar-fixed-top(role='navigation')
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Wiki
+            //img(src="http://esbcn01l127776:3000/images/logo_small.png" width="42" height="42") 
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/entry_editor') 
+                div.small-icon.glyphicon.glyphicon-pencil
+                | New Page
+            li
+              a(href='/entry_list/page=1') 
+                div.small-icon.glyphicon.glyphicon-refresh
+                | Last entries
+            li
+              a(href='/cathegories/sort=updated_at&order=-1&page=1')
+                div.small-icon.glyphicon.glyphicon-tags
+                | Cathegories
+                    
+          .col-sm-3.col-md-3
+            form.navbar-form(role='search')
+              .input-group
+                input.form-control(type='text', placeholder='Search', name='q')
+                .input-group-btn
+                  button.btn.btn-default(type='submit')
+                    i.small-icon.glyphicon.glyphicon-search
+          
+          ul.nav.navbar-nav.navbar-right
+            if (user)
+              li 
+                a(href='/user/#{user.username}&page=1') 
+                  div.small-icon.glyphicon.glyphicon-user
+                  | #{user.username}
+              li
+                a(href='/logout') Logout  
+              li
+                a(href='/logout')
+                  | 
+            else 
+              li
+                a(href='/login') 
+                  div.small-icon.glyphicon.glyphicon-road
+                  | Login
+              li
+                a(href='/register')
+                  div.small-icon.glyphicon.glyphicon-tent
+                  | Register 
+              li
+                a(href='/register') 
+                  |  
         
   block content

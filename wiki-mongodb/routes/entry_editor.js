@@ -31,7 +31,7 @@ router.get('/entry_editor', function(req, res) {
 router.post('/entry_editor', function(req, res) {
   var cathegories = req.body.cathegoriesSemicolom.split(';');
   for (var i=0; i<cathegories.length;i++){
-    if (cathegories[i]!='') updateCathegory(cathegories[i]);
+    if (cathegories[i]) updateCathegory(cathegories[i]);
   }
 
   var entry = new PageEntry({'_id': req.body._id,
@@ -89,7 +89,22 @@ function updateCathegory (cathegory_name){
         if (err) throw err;
         });
     } else {
+      countEntriesWithCathegory (cathegory_name, function(count){
+        cathegory.number_of_entries = count;
+        cathegory.updated_at= new Date();
+        Cathegory.update({'_id':cathegory._id}, cathegory, function(err,raw){
+          if (err) throw err;
+        });
+      });
     }
+  });
+}
+
+function countEntriesWithCathegory (cathegory_name, callback){
+  PageEntry.count({'cathegories':cathegory_name})
+  .exec(function(err, count){
+    if (err) throw err;
+    return callback(count);
   });
 }
 

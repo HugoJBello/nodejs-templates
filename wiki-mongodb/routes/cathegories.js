@@ -6,16 +6,16 @@ var PageEntry   =require('../models/page_entry');
 var perPage = 10;
 
 router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
-  if (req.params.page>=1){ 
+  if (req.params.page>=1){
     Cathegory.findOne({'_id':req.params.cathegory_id}, function(err, cathegory){
       if (err) throw err;
+      console.log(cathegory);
+
       if (!cathegory){
         return res.redirect('/category_editor/'+ req.params.cathegory_id);
       } else {
         numberOfPages(cathegory.name, function(pages){
           findEntriesWithCathegory(cathegory.name,req.params.page, function(entries){
-            console.log('entries');
-            console.log(entries);
             var descriptionHtml ='';
             if (typeof cathegory.description!== 'undefined') descriptionHtml = md(cathegory.description);
             return res.render('cathegory', {cathegory :  cathegory,entries:entries, page:req.params.page,pages:pages, descriptionHtml : descriptionHtml, user : req.user});
@@ -32,8 +32,6 @@ router.get('/cathegory/cat=:cathegory_id&page=:page', function(req, res) {
 router.get('/cathegory_editor/:cathegory_id', function(req, res) {
     Cathegory.findOne({'_id':req.params.cathegory_id}, function(err, cathegory){
       if (err) throw err;
-      console.log(cathegory);
-
       if (!cathegory){
         return res.render('cathegory_editor', {cathegory_id :  req.params.cathegory_id, user : req.user});
       } else {
@@ -75,7 +73,6 @@ function findEntriesWithCathegory (cathegory_name,page, callback){
 
  function numberOfPages (cathegory_name,callback){
    PageEntry.count({'cathegories':cathegory_name}, function( err, count){
-     console.log( "Number of entries", count/perPage );
      return callback(Math.floor(count/perPage));
    });
  }
