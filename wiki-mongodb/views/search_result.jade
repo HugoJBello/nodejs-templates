@@ -10,16 +10,16 @@ block content
         tr
           td
             if ((sort=='name')&& (order=='-1'))
-              a(href='/entry_list/sort=name&order=1&page=1')
+              a(href='/search_result/sort=name&order=1&page=1')
                 |Title 
                 span.glyphicon.glyphicon-sort-by-alphabet-alt
             else
               if ((sort=='name')&& (order=='1'))
-                a(href='/entry_list/sort=name&order=-1&page=1')
+                a(href='/search_result/sort=name&order=-1&page=1')
                   |Title 
                   span.glyphicon.glyphicon-sort-by-alphabet
               else
-                a(href='/entry_list/sort=name&order=-1&page=1')
+                a(href='/search_result/sort=name&order=-1&page=1')
                   |Title 
                   small
                     span.glyphicon.glyphicon-sort
@@ -27,31 +27,31 @@ block content
      
           td
             if ((sort=='updated_at')&& (order=='-1'))
-              a(href='/entry_list/sort=updated_at&order=1&page=1')
+              a(href='/search_result/sort=updated_at&order=1&page=1')
                 |Updated at 
                 span.glyphicon.glyphicon-sort-by-attributes-alt
             else
               if ((sort=='updated_at')&& (order=='1'))
-                a(href='/entry_list/sort=updated_at&order=-1&page=1')
+                a(href='/search_result/sort=updated_at&order=-1&page=1')
                   |Updated at 
                   span.glyphicon.glyphicon-sort-by-attributes
               else
-                a(href='/entry_list/sort=updated_at&order=-1&page=1')
+                a(href='/search_result/sort=updated_at&order=-1&page=1')
                   |Updated at 
                   small
                     span.glyphicon.glyphicon-sort
           td
             if ((sort=='edited_by')&& (order=='-1'))
-              a(href='/entry_list/sort=edited_by&order=1&page=1')
+              a(href='/search_result/sort=edited_by&order=1&page=1')
                 |Updated by  
                 span.glyphicon.glyphicon-sort-by-alphabet-alt
             else
               if ((sort=='edited_by')&& (order=='1'))
-                a(href='/entry_list/sort=edited_by&order=-1&page=1')
+                a(href='/search_result/sort=edited_by&order=-1&page=1')
                   |Updated by 
                   span.glyphicon.glyphicon-sort-by-alphabet
               else
-                a(href='/entry_list/sort=edited_by&order=-1&page=1')
+                a(href='/search_result/sort=edited_by&order=-1&page=1')
                   |Updated by 
                   small
                     span.glyphicon.glyphicon-sort

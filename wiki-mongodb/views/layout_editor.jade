@@ -12,15 +12,15 @@ block content
       li(id='liView')
         a(id='view' href='/entry_viewer/#{entry.name}') View
           |  
-          div.glyphicon.glyphicon-eye-open
+          span.glyphicon.glyphicon-eye-open
       li(id='liEdit')
         a(id='edit' href='/entry_editor/#{entry.name}') Edit
           |  
-          div.glyphicon.glyphicon-pencil
+          span.glyphicon.glyphicon-pencil
       li(id='liUpload')
         a(href='/upload/#{entry.name}') Add image
           |  
-          div.glyphicon.glyphicon-picture
+          span.glyphicon.glyphicon-picture
       li(id='liHistory')
         a(href='/entry_history/#{entry.name}&page=1') History
       //- li(type='hidden' id='liSave')
@@ -31,15 +31,15 @@ block content
         li(id='liView')
           a(id='view' href='/entry_viewer/#{entry_name}') View
             |  
-            div.glyphicon.glyphicon-eye-open
+            span.glyphicon.glyphicon-eye-open
         li(id='liEdit')
           a(id='edit' href='/entry_editor/#{entry_name}') Edit
             |  
-            div.glyphicon.glyphicon-pencil
+            span.glyphicon.glyphicon-pencil
         li(id='liUpload')
           a(href='/upload/#{entry_name}') Add image
             |  
-            div.glyphicon.glyphicon-picture
+            span.glyphicon.glyphicon-picture
         li
           a(href='#') History
       

@@ -37,21 +37,21 @@ html
           ul.nav.navbar-nav
             li
               a(href='/entry_editor') 
-                div.small-icon.glyphicon.glyphicon-pencil
-                | New Page
+                | New Page 
+                span.small-icon.glyphicon.glyphicon-pencil
             li
-              a(href='/entry_list/page=1') 
-                div.small-icon.glyphicon.glyphicon-refresh
-                | Last entries
+              a(href='/entry_list/sort=updated_at&order=-1&page=1') 
+                | Last entries 
+                span.small-icon.glyphicon.glyphicon-refresh
             li
               a(href='/cathegories/sort=updated_at&order=-1&page=1')
-                div.small-icon.glyphicon.glyphicon-tags
-                | Cathegories
+                | Cathegories 
+                span.small-icon.glyphicon.glyphicon-tags
                     
           .col-sm-3.col-md-3
-            form.navbar-form(role='search')
+            form.navbar-form(role='search', action = '/search', method='post')
               .input-group
-                input.form-control(type='text', placeholder='Search', name='q')
+                input.form-control(type='text', placeholder='Search', name='text')
                 .input-group-btn
                   button.btn.btn-default(type='submit')
                     i.small-icon.glyphicon.glyphicon-search
@@ -60,8 +60,8 @@ html
             if (user)
               li 
                 a(href='/user/#{user.username}&page=1') 
-                  div.small-icon.glyphicon.glyphicon-user
-                  | #{user.username}
+                  | #{user.username} 
+                  span.small-icon.glyphicon.glyphicon-user
               li
                 a(href='/logout') Logout  
               li
@@ -70,12 +70,13 @@ html
             else 
               li
                 a(href='/login') 
-                  div.small-icon.glyphicon.glyphicon-road
-                  | Login
+                  | Login 
+                  span.small-icon.glyphicon.glyphicon-road
               li
                 a(href='/register')
-                  div.small-icon.glyphicon.glyphicon-tent
                   | Register 
+                  span.small-icon.glyphicon.glyphicon-tent
+
               li
                 a(href='/register') 
                   |  
