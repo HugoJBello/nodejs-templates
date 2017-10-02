@@ -2,7 +2,7 @@ var express = require('express');
 var md = require("marked");
 var router = express.Router();
 var PageEntryHistory   =require('../models/page_entry_history');
-var perPage = 15;
+var perPage = 20;
 
 router.get('/entry_history/:entry_name&page=:page', function(req, res) {
   if(req.params.page>=1){

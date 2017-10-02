@@ -3,7 +3,7 @@ var md = require("marked");
 var Cathegory = require('../models/cathegory');
 var router = express.Router();
 var PageEntry   =require('../models/page_entry');
-var perPage = 10;
+var perPage = 20;
 
 router.get('/cathegories/sort=:sort&order=:order&page=:page', function(req, res) {
   if (req.params.page>=1){

@@ -43,7 +43,7 @@ function manageInternarReferences(mdEntry){
   var links = mdEntry.match(/\[(.*?)\]\((.*?)\)/g);
   if (links){
     for (var i=0; i< links.length; i++){
-      if (!((links[i].includes('http://'))&& (links[i].includes('https://')))){
+      if (!((links[i].includes('http:'))|| (links[i].includes('https:')))){
         var insideParenthesis = extractFronParenthesis(links[i]);
         console.log('---' + insideParenthesis);
         var cleanLink = links[i].replace('('+insideParenthesis+')','('+ titleToFilename(insideParenthesis)+')');
