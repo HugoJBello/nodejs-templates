@@ -1,0 +1,33 @@
+<br>
+<div class="bar-editor-entry">
+ <div *ngIf="entry">
+   <h1><span>{{entry.title}}</span></h1>
+   		  <ul class="nav nav-tabs">
+   		    <li id="liView"><a id="view" href="/entry/{{entry.name}}">
+   		        View
+   		         <span class="glyphicon glyphicon-eye-open"></span></a></li>
+   		    <li id="liEdit"><a id="edit" href="/entry_editor/{{entry.name}}">
+   		        Edit
+   		         <span class="glyphicon glyphicon-pencil"></span></a></li>
+   		    <li id="liUpload"><a href="/upload/{{entry.name}}">
+   		        Add image
+   		         <span class="glyphicon glyphicon-picture"></span></a></li>
+   		    <li id="liHistory"><a href="/entry_history/{{entry.name}}">History</a></li>
+   		  </ul>
+   	</div>
+    <div *ngIf="!entry">
+      <h1>empty entry</h1>
+           <ul class="nav nav-tabs">
+             <li id="liView"><a id="view" href="/entry/">
+                 View
+                  <span class="glyphicon glyphicon-eye-open"></span></a></li>
+             <li id="liEdit"><a id="edit" href="/entry_editor/">
+                 Edit
+                  <span class="glyphicon glyphicon-pencil"></span></a></li>
+             <li id="liUpload"><a href="/upload/">
+                 Add image
+                  <span class="glyphicon glyphicon-picture"></span></a></li>
+             <li id="liHistory"><a href="/entry_history/">History</a></li>
+           </ul>
+      </div>
+  </div>
