@@ -5,11 +5,12 @@
   "main": "ex.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node seleniumExample.js"
+    "start": "ts-node seleniumExample.ts"
   },
   "author": "Hugo J. Bello",
   "license": "ISC",
   "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "selenium-webdriver": "^4.0.0-alpha.1",
+    "ts-node": "^6.0.5"
   }
 }
