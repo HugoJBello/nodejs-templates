@@ -7,10 +7,12 @@ const pointsArray = [ [ -0.00005, -0.00005 ],
 [ 40.57113, -4.06052 ],
 [ 40.57118, -4.06047 ] ];
 
+const pointsArray2= require("./poly.json");
+console.log(pointsArray2)
 var polyline = require('@mapbox/polyline');
 
 
-const polylineEncoded = polyline.encode(pointsArray);
+const polylineEncoded = polyline.encode(pointsArray2);
 
 console.log(polylineEncoded);
 
