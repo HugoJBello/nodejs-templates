@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@mapbox/polyline": "^1.0.0",
-    "decode-google-map-polyline": "^1.0.1"
+    "decode-google-map-polyline": "^1.0.1",
+    "geojson-polyline": "^1.0.2",
+    "google-polyline": "^1.0.0"
   }
 }
