@@ -3,20 +3,29 @@ const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const createError = require('http-errors');
-var indexRouter = require('./routes/registry');
+var registry = require('./routes/registry');
 
 
 require('dotenv').load();
 
-app.use('/', indexRouter);
+//Here we add the routes
+app.use('/api/registry/', registry);
 
-const port = 3000;
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-
+//We configure express
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+//We connect to the database
+mongoose.Promise = require('bluebird');
+mongoUrl = process.env['MONGODB_URL']
+mongoose.connect(mongoUrl, { promiseLibrary: require('bluebird') })
+    .then(() => console.log('Mongodb connection succesful'))
+    .catch((err) => console.error(err));
+
+//We start listening
+const port = 3000;
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -33,3 +42,5 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+module.exports = app;
