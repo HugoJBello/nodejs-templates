@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "mocha": "^5.2.0",
+    "mongoose": "^5.4.3",
     "restify": "^7.5.0",
     "restify-plugins": "^1.6.0"
   }
