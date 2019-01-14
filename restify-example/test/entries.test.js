@@ -10,21 +10,20 @@ describe('App', () => {
     //this.timeout(15000);
 
     describe('/entry?id=test', () => {
-        const param = "blablabla";
         it('should retrieve the entry', function (done) {
             chai.request(server)
-                .get(`/entry?id=test`)
+                .get(`/entry?id=test2`)
                 .end(function (err, res) {
                     if (err) throw err;
                     expect(res).to.have.status(200);
-                    expect(res.title).not.undefined;
+                    expect(res.body.title).not.undefined;
                     done();
                 });
         });
     });
 
     describe('/entry_save', () => {
-        const entry = {_id:"test-entry", title:"test", }
+        const entry = {_id:"test", title:"test"};
         it('it should post the entry', function (done) {
             chai.request(server)
                 .post(`/entry_save`)

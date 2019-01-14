@@ -13,6 +13,14 @@ const routes= (server) => {
 
   server.post('/entry_save', (req, res, next) => {
     const body = req.params;
+      Entry.findOneAndReplace({_id:body._id}, body).then(doc => {
+          if (doc===null){
+              Entry.create(body);
+          }
+      })
+      .catch(err => {
+          console.error(err)
+      });
     res.send({message:'Hello from route 2 post. you introduced ' + body.param1});
     return next();
   });

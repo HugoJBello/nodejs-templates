@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000",
+    "test-features": "cucumber-js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "mongoose": "^5.4.3",
     "restify": "^7.5.0",
     "restify-plugins": "^1.6.0"
+  },
+  "devDependencies": {
+    "cucumber": "^5.1.0"
   }
 }
